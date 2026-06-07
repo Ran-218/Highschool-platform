@@ -18,8 +18,8 @@ async function loadPosts() {
         id: index,
         text: cols[1],
         category: cols[2],
-        like: Number(cols[3] || 0),
-        mood: Number(cols[4] || 0)
+        like: Number(cols[4] || 0),
+        mood: Number(cols[3] || 0)
       };
     }).filter(p => p.text);
 
