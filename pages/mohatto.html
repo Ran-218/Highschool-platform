@@ -18,22 +18,43 @@
 
 <hr>
 
-<h2>🔥 人気ランキング TOP5</h2>
+<h3>カテゴリー分類</h3>
+
+<button onclick="filter('all')">全て</button>
+
+<button onclick="filter('school')">学校</button>
+
+<button onclick="filter('relationship')">人間関係</button>
+
+<button onclick="filter('future')">将来</button>
+
+<button onclick="filter('other')">その他</button>
+
+<h3>モヤ度フィルター</h3>
+
+<button onclick="filterMood('all')">全部</button>
+
+<button onclick="filterMood(1)">1</button>
+
+<button onclick="filterMood(2)">2</button>
+
+<button onclick="filterMood(3)">3</button>
+
+<button onclick="filterMood(4)">4</button>
+
+<button onclick="filterMood(5)">5</button>
+
+<hr>
+
+<h2>🔥 人気ランキング</h2>
+
 <div id="ranking"></div>
 
 <hr>
 
-<h2>カテゴリー分類</h2>
+<h2>みんなのモヤっと</h2>
 
-<button onclick="filter('all')">全て</button>
-<button onclick="filter('school')">学校</button>
-<button onclick="filter('relationship')">人間関係</button>
-<button onclick="filter('future')">将来</button>
-<button onclick="filter('other')">その他</button>
-
-<hr>
-
-<div id="list"></div>
+<div id="list">読み込み中...</div>
 
 <script src="../script.js"></script>
 
