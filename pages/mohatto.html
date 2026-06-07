@@ -1,3 +1,41 @@
-<h2>モヤっと投稿</h2>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>モヤっと投稿</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<h1>モヤっと投稿</h1>
 
 <p>感じたことを書いてください。日々のちょっとした感想、大歓迎です。</p>
+<iframe 
+  src="YOUR_GOOGLE_FORM_URL"
+  width="100%"
+  height="400">
+</iframe>
+
+<hr>
+
+<h2>🔥 人気ランキング TOP5</h2>
+<div id="ranking"></div>
+
+<hr>
+
+<h2>フィード</h2>
+
+<button onclick="filter('all')">全て</button>
+<button onclick="filter('school')">学校</button>
+<button onclick="filter('relationship')">人間関係</button>
+<button onclick="filter('future')">将来</button>
+<button onclick="filter('other')">その他</button>
+
+<hr>
+
+<div id="list"></div>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
