@@ -1,4 +1,4 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdAhin7PhjIeyGazTjm6A0GLHmAwPJntq0y5tbhnHAwXka43IojoVUOLNHxrjBmHV2txuSxMjO92MO/pub?output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdAhin7PhjIeyGazTjm6A0GLHmAwPJntq0y5tbhnHAwXka43IojoVUOLNHxrjBmHV2txuSxMjO92MO/pub?gid=1315473768&single=true&output=csv";
 
 let posts = [];
 let currentFilter = "all";
