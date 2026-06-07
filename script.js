@@ -1,4 +1,4 @@
-const SHEET_URL = "YOUR_GOOGLE_SHEETS_CSV_URL";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1a7d5S8oVsK_Uox3s5iaXQ1PLiNLq1J1d9NuRFmmBqgU/edit?usp=sharing";
 
 let posts = [];
 let currentFilter = "all";
