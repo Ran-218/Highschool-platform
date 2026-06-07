@@ -12,17 +12,17 @@ async function loadPosts() {
 
     const rows = text.split("\n").slice(1);
 
-    posts = rows.map((row, index) => {
-      const cols = row.split(",");
+ posts = rows.map((row, index) => {
+  const cols = row.split(/\t|,/);
 
-      return {
-        id: index,
-        text: cols[1],
-        category: cols[2],
-        like: Number(cols[4] || 0),
-        mood: Number(cols[3] || 0)
-      };
-    }).filter(p => p.text);
+  return {
+    id: index,
+    text: cols[1],
+    category: cols[2],
+    mood: Number(cols[3] || 0),
+    like: Number(cols[4] || 0)
+  };
+}).filter(p => p.text);
 
     render();
     renderRanking();
