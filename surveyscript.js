@@ -1,14 +1,14 @@
 const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRXzSUjykCIlazKDNsoSk6S3FUCFchywAhpU6F6EaNOS5ptr9FG22q0dvTRSlCh8rdisjt2X-E27t97/pub?output=csv";
 
-// 初期ロード
+let todayQuestion = "";
+let todayQuestionId = "";
+
+// 初期化
 loadData();
 
-// クリックで送信（仮：まずローカル集計）
-function submitAnswer(answer) {
-  alert("送信（Google Forms連携は後で追加）: " + answer);
-}
-
-// データ取得＆描画
+// ----------------------
+// データ読み込み
+// ----------------------
 function loadData() {
 
   fetch(csvURL)
@@ -17,31 +17,96 @@ function loadData() {
 
       const rows = csv.trim().split("\n");
 
-      let yes = 0;
-      let no = 0;
+      let questions = [];
+      let answers = [];
 
       rows.slice(1).forEach(row => {
 
         const cols = row.split(",");
-        const ans = cols[1]?.trim();
 
-        if (ans === "はい") yes++;
-        if (ans === "いいえ") no++;
+        const id = cols[0];
+        const type = cols[1];
+        const text = cols[2];
+        const answer = cols[3];
+
+        if(type === "question"){
+          questions.push({id, text});
+        }
+
+        if(type === "answer"){
+          answers.push(answer);
+        }
 
       });
 
-      drawChart(yes, no);
+      selectTodayQuestion(questions);
+      drawChart(answers);
 
     });
 
 }
 
-// グラフ描画
-function drawChart(yes, no) {
+// ----------------------
+// 今日の質問（擬似ランダム固定）
+// ----------------------
+function selectTodayQuestion(questions) {
 
-  const ctx = document.getElementById("chart");
+  if(questions.length === 0){
+    document.getElementById("question").innerText =
+      "質問がまだありません";
+    return;
+  }
 
-  new Chart(ctx, {
+  // 日付ベースで固定（同じ日に同じ質問）
+  const today = new Date().toISOString().slice(0,10);
+
+  let hash = 0;
+  for(let i=0;i<today.length;i++){
+    hash += today.charCodeAt(i);
+  }
+
+  const index = hash % questions.length;
+
+  todayQuestion = questions[index].text;
+  todayQuestionId = questions[index].id;
+
+  document.getElementById("question").innerText = todayQuestion;
+}
+
+// ----------------------
+// 質問投稿
+// ----------------------
+function submitQuestion() {
+
+  const q = document.getElementById("newQuestion").value;
+
+  alert("質問投稿（Sheets連携必要）: " + q);
+
+}
+
+// ----------------------
+// 回答投稿
+// ----------------------
+function submitAnswer(answer) {
+
+  alert(`質問: ${todayQuestion}\n回答: ${answer}`);
+
+}
+
+// ----------------------
+// グラフ
+// ----------------------
+function drawChart(answers) {
+
+  let yes = 0;
+  let no = 0;
+
+  answers.forEach(a => {
+    if(a === "はい") yes++;
+    if(a === "いいえ") no++;
+  });
+
+  new Chart(document.getElementById("chart"), {
     type: "bar",
     data: {
       labels: ["はい", "いいえ"],
@@ -49,16 +114,12 @@ function drawChart(yes, no) {
         label: "回答数",
         data: [yes, no]
       }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
     }
   });
 
 }
 
-// 10秒ごとに更新（リアルタイム化）
+// ----------------------
+// 10秒更新（簡易リアルタイム）
+// ----------------------
 setInterval(loadData, 10000);
