@@ -18,7 +18,7 @@ let chart = null;
 // 初期化
 // --------------------
 loadData();
-console.log("FETCH START");
+
 console.log("LOADDATA RUN");#
 setInterval(loadData, 15000);
 
@@ -26,6 +26,8 @@ setInterval(loadData, 15000);
 // データ読み込み
 // --------------------
 function loadData() {
+
+console.log("FETCH START");
 
   Promise.all([
     fetch(questionsURL).then(r => r.text()),
