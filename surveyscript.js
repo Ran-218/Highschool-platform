@@ -5,9 +5,6 @@ let todayQuestionId = "";
 
 loadData();
 
-// ----------------------
-// データ読み込み
-// ----------------------
 function loadData() {
 
   fetch(csvURL)
@@ -23,24 +20,28 @@ function loadData() {
 
         const cols = row.split(",");
 
-        const id = (cols[0] || "").trim();
-        const col2 = (cols[1] || "").trim();
-        const col3 = (cols[2] || "").trim();
-
         // Sheet1（questions）
-        if(cols.length >= 3 && col2 && !col3){
-          questions.push({
-            id: id,
-            text: col2
-          });
+        if(cols.length === 3){
+
+          const id = (cols[0] || "").trim();
+          const text = (cols[1] || "").trim();
+
+          if(id && text){
+            questions.push({id, text});
+          }
+
         }
 
         // Sheet2（answers）
-        if(cols.length >= 2 && col2 && col3){
-          answers.push({
-            question_id: id,
-            answer: col2
-          });
+        if(cols.length === 3){
+
+          const question_id = (cols[0] || "").trim();
+          const answer = (cols[1] || "").trim();
+
+          if(answer){
+            answers.push({question_id, answer});
+          }
+
         }
 
       });
@@ -50,15 +51,13 @@ function loadData() {
 
     })
     .catch(err => {
-      console.error("fetch error:", err);
+      console.error(err);
       document.getElementById("question").innerText = "読み込み失敗";
     });
 
 }
 
-// ----------------------
-// 今日の質問（固定化）
-// ----------------------
+// 今日の質問（固定）
 function selectTodayQuestion(questions) {
 
   if(questions.length === 0){
@@ -81,19 +80,14 @@ function selectTodayQuestion(questions) {
   document.getElementById("question").innerText = todayQuestion;
 }
 
-// ----------------------
-// 回答送信（仮）
-// ----------------------
+// 回答
 function submitAnswer(answer) {
 
   alert(`質問: ${todayQuestion}\n回答: ${answer}`);
 
-  // 本当はここでGoogle Forms or Apps Scriptに送る
 }
 
-// ----------------------
 // 質問投稿（仮）
-// ----------------------
 function submitQuestion() {
 
   const q = document.getElementById("newQuestion").value;
@@ -102,9 +96,7 @@ function submitQuestion() {
 
 }
 
-// ----------------------
 // グラフ
-// ----------------------
 let chart;
 
 function drawChart(answers) {
@@ -113,13 +105,11 @@ function drawChart(answers) {
   let no = 0;
 
   answers.forEach(a => {
-    if((a.answer || "").trim() === "はい") yes++;
-    if((a.answer || "").trim() === "いいえ") no++;
+    if(a.answer === "はい") yes++;
+    if(a.answer === "いいえ") no++;
   });
 
-  if(chart){
-    chart.destroy();
-  }
+  if(chart) chart.destroy();
 
   chart = new Chart(document.getElementById("chart"), {
     type: "bar",
@@ -134,7 +124,4 @@ function drawChart(answers) {
 
 }
 
-// ----------------------
-// 10秒更新
-// ----------------------
-setInterval(loadData, 10000);
+setInterval(loadData, 15000);
