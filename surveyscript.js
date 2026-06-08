@@ -6,6 +6,18 @@ let todayQuestionId = "";
 
 loadData();
 
+fetch(csvURL)
+  .then(res => {
+    console.log("STATUS:", res.status);
+    return res.text();
+  })
+  .then(csv => {
+    console.log("CSV RAW:", csv);
+  })
+  .catch(err => {
+    console.error("FETCH ERROR:", err);
+  });
+
 function loadData() {
 
   Promise.all([
