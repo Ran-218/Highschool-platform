@@ -22,22 +22,24 @@ function loadData() {
 
       rows.slice(1).forEach(row => {
 
-        const cols = row.split(",");
+  const cols = row.split(",");
 
-        const id = cols[0];
-        const type = cols[1];
-        const text = cols[2];
-        const answer = cols[3];
+  const id = cols[0]?.trim();
+  const type = cols[1]?.trim();
+  const text = cols[2]?.trim();
+  const answer = cols[3]?.trim();
 
-        if(type === "question"){
-          questions.push({id, text});
-        }
+  if(!type) return;
 
-        if(type === "answer"){
-          answers.push(answer);
-        }
+  if(type === "question"){
+    questions.push({id, text});
+  }
 
-      });
+  if(type === "answer"){
+    answers.push(answer);
+  }
+
+});
 
       selectTodayQuestion(questions);
       drawChart(answers);
