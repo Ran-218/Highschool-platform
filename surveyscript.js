@@ -22,12 +22,14 @@ function loadData() {
 
       rows.slice(1).forEach(row => {
 
-  const cols = row.split(",");
+const cols = row.split(",");
 
-  const id = cols[0]?.trim();
-  const type = cols[1]?.trim();
-  const text = cols[2]?.trim();
-  const answer = cols[3]?.trim();
+if(cols.length < 2) return;
+
+const id = (cols[0] || "").trim();
+const type = (cols[1] || "").trim();
+const text = (cols[2] || "").trim();
+const answer = (cols[3] || "").trim();
 
   if(!type) return;
 
