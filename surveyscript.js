@@ -1,4 +1,3 @@
-console.log("SCRIPT START");
 console.log("SURVEY SCRIPT LOADED");
 
 // --------------------
@@ -19,15 +18,12 @@ let chart = null;
 // --------------------
 loadData();
 
-console.log("LOADDATA RUN");#
 setInterval(loadData, 15000);
 
 // --------------------
 // データ読み込み
 // --------------------
 function loadData() {
-
-console.log("FETCH START");
 
   Promise.all([
     fetch(questionsURL).then(r => r.text()),
