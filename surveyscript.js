@@ -3,7 +3,6 @@ const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRXzSUjykCIlazKD
 let todayQuestion = "";
 let todayQuestionId = "";
 
-// 初期化
 loadData();
 
 // ----------------------
@@ -22,46 +21,51 @@ function loadData() {
 
       rows.slice(1).forEach(row => {
 
-const cols = row.split(",");
+        const cols = row.split(",");
 
-if(cols.length < 2) return;
+        const id = (cols[0] || "").trim();
+        const col2 = (cols[1] || "").trim();
+        const col3 = (cols[2] || "").trim();
 
-const id = (cols[0] || "").trim();
-const type = (cols[1] || "").trim();
-const text = (cols[2] || "").trim();
-const answer = (cols[3] || "").trim();
+        // Sheet1（questions）
+        if(cols.length >= 3 && col2 && !col3){
+          questions.push({
+            id: id,
+            text: col2
+          });
+        }
 
-  if(!type) return;
+        // Sheet2（answers）
+        if(cols.length >= 2 && col2 && col3){
+          answers.push({
+            question_id: id,
+            answer: col2
+          });
+        }
 
-  if(type === "question"){
-    questions.push({id, text});
-  }
-
-  if(type === "answer"){
-    answers.push(answer);
-  }
-
-});
+      });
 
       selectTodayQuestion(questions);
       drawChart(answers);
 
+    })
+    .catch(err => {
+      console.error("fetch error:", err);
+      document.getElementById("question").innerText = "読み込み失敗";
     });
 
 }
 
 // ----------------------
-// 今日の質問（擬似ランダム固定）
+// 今日の質問（固定化）
 // ----------------------
 function selectTodayQuestion(questions) {
 
   if(questions.length === 0){
-    document.getElementById("question").innerText =
-      "質問がまだありません";
+    document.getElementById("question").innerText = "質問なし";
     return;
   }
 
-  // 日付ベースで固定（同じ日に同じ質問）
   const today = new Date().toISOString().slice(0,10);
 
   let hash = 0;
@@ -78,39 +82,46 @@ function selectTodayQuestion(questions) {
 }
 
 // ----------------------
-// 質問投稿
+// 回答送信（仮）
+// ----------------------
+function submitAnswer(answer) {
+
+  alert(`質問: ${todayQuestion}\n回答: ${answer}`);
+
+  // 本当はここでGoogle Forms or Apps Scriptに送る
+}
+
+// ----------------------
+// 質問投稿（仮）
 // ----------------------
 function submitQuestion() {
 
   const q = document.getElementById("newQuestion").value;
 
-  alert("質問投稿（Sheets連携必要）: " + q);
-
-}
-
-// ----------------------
-// 回答投稿
-// ----------------------
-function submitAnswer(answer) {
-
-  alert(`質問: ${todayQuestion}\n回答: ${answer}`);
+  alert("質問投稿: " + q);
 
 }
 
 // ----------------------
 // グラフ
 // ----------------------
+let chart;
+
 function drawChart(answers) {
 
   let yes = 0;
   let no = 0;
 
   answers.forEach(a => {
-    if(a === "はい") yes++;
-    if(a === "いいえ") no++;
+    if((a.answer || "").trim() === "はい") yes++;
+    if((a.answer || "").trim() === "いいえ") no++;
   });
 
-  new Chart(document.getElementById("chart"), {
+  if(chart){
+    chart.destroy();
+  }
+
+  chart = new Chart(document.getElementById("chart"), {
     type: "bar",
     data: {
       labels: ["はい", "いいえ"],
@@ -124,6 +135,6 @@ function drawChart(answers) {
 }
 
 // ----------------------
-// 10秒更新（簡易リアルタイム）
+// 10秒更新
 // ----------------------
 setInterval(loadData, 10000);
