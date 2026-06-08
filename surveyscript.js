@@ -1,3 +1,4 @@
+console.log("SCRIPT START");
 console.log("SURVEY SCRIPT LOADED");
 
 // --------------------
@@ -17,6 +18,8 @@ let chart = null;
 // 初期化
 // --------------------
 loadData();
+console.log("FETCH START");
+console.log("LOADDATA RUN");#
 setInterval(loadData, 15000);
 
 // --------------------
