@@ -2,27 +2,33 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>セルフ世論調査</title>
+  <title>高校生 世論調査</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<h2>セルフ世論調査</h2>
+<h1>今日の質問</h1>
 
-<p>Q. あなたはスマホ依存だと思いますか？</p>
+<p id="question">読み込み中...</p>
 
 <button onclick="submitAnswer('はい')">はい</button>
 <button onclick="submitAnswer('いいえ')">いいえ</button>
 
 <hr>
 
-<h3>🌟結果（リアルタイム）</h3>
-
+<h2>結果</h2>
 <canvas id="chart"></canvas>
 
-<script src="../script.js"></script>
+<hr>
+
+<h2>質問を投稿</h2>
+
+<input id="newQuestion" placeholder="新しい質問">
+<button onclick="submitQuestion()">投稿</button>
+
+<script src="script.js"></script>
 
 </body>
 </html>
