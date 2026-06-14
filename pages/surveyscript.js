@@ -136,7 +136,7 @@ function submitQuestion() {
   }
 
   fetch(
-    "https://script.google.com/macros/s/AKfycbyMK5hRAMub2Bx4tj8qIJDCOWhsWRjlCEiS1xQhkkFetK9JJbQxhsVi7hlzo4Fbrmuo/exec",
+    "https://script.google.com/macros/s/AKfycbwyrru1W9mptenFPy5mU5ihBYiYLqod9zcZanZI7qnyx14BteotGJGtlE-z2pDHUFA3/exec",
     {
       method: "POST",
       body: JSON.stringify({
