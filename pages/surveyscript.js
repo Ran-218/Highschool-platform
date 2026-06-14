@@ -1,4 +1,4 @@
-console.log("SURVEY SCRIPT LOADED");
+=console.log("SURVEY SCRIPT LOADED");
 
 // --------------------
 // CSV URL
@@ -114,20 +114,55 @@ function selectTodayQuestion(questions) {
 }
 
 // --------------------
-// 回答（仮）
+// 回答送信
 // --------------------
 function submitAnswer(answer) {
-  alert(`質問: ${todayQuestion}\n回答: ${answer}`);
+
+  alert("回答: " + answer);
+
 }
 
+
 // --------------------
-// 質問投稿（仮）
+// 質問投稿
 // --------------------
 function submitQuestion() {
-  const q = document.getElementById("newQuestion").value;
-  alert("質問投稿（未連携）: " + q);
-}
 
+  const q = document.getElementById("newQuestion").value;
+
+  if (!q) {
+    alert("質問を入力してください");
+    return;
+  }
+
+  fetch(
+    "https://script.google.com/macros/s/AKfycbyMK5hRAMub2Bx4tj8qIJDCOWhsWRjlCEiS1xQhkkFetK9JJbQxhsVi7hlzo4Fbrmuo/exec",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        question: q
+      })
+    }
+  )
+  .then(response => response.text())
+  .then(data => {
+
+    alert("投稿しました");
+
+    document.getElementById("newQuestion").value = "";
+
+    loadData();
+
+  })
+  .catch(error => {
+
+    console.error(error);
+
+    alert("投稿に失敗しました");
+
+  });
+
+}
 // --------------------
 // グラフ
 // --------------------
