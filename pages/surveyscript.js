@@ -1,4 +1,4 @@
-=console.log("SURVEY SCRIPT LOADED");
+console.log("SURVEY SCRIPT LOADED");
 
 // --------------------
 // CSV URL
