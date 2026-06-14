@@ -13,12 +13,14 @@ let todayQuestion = "";
 let todayQuestionId = "";
 let chart = null;
 
+
 // --------------------
 // 初期化
 // --------------------
 loadData();
 
 setInterval(loadData, 15000);
+
 
 // --------------------
 // データ読み込み
@@ -29,92 +31,119 @@ function loadData() {
     fetch(questionsURL).then(r => r.text()),
     fetch(answersURL).then(r => r.text())
   ])
+
   .then(([qcsv, acsv]) => {
 
     let questions = [];
     let answers = [];
 
-    // --------------------
-    // QUESTIONS
-    // --------------------
+    // questionsシート
     qcsv
       .trim()
       .split(/\r?\n/)
-      .filter(r => r)
       .slice(1)
       .forEach(row => {
 
         const cols = row.split(",");
 
-        const id = (cols[0] ?? "").trim();
-        const type = (cols[1] ?? "").trim();
-        const text = (cols[2] ?? "").trim();
+        const id = (cols[0] || "").trim();
+        const type = (cols[1] || "").trim();
+        const text = (cols[2] || "").trim();
 
-        if (type === "question" && text) {
-          questions.push({ id, text });
+        if (type === "question") {
+
+          questions.push({
+            id: id,
+            text: text
+          });
+
         }
+
       });
 
-    // --------------------
-    // ANSWERS
-    // --------------------
+
+    // answersシート
     acsv
       .trim()
       .split(/\r?\n/)
-      .filter(r => r)
       .slice(1)
       .forEach(row => {
 
         const cols = row.split(",");
 
-        const type = (cols[1] ?? "").trim();
-        const answer = (cols[2] ?? "").trim();
+        const question_id = (cols[0] || "").trim();
+        const answer = (cols[1] || "").trim();
 
-        if (type === "answer" && answer) {
-          answers.push(answer);
+        if (answer) {
+
+          answers.push({
+            question_id: question_id,
+            answer: answer
+          });
+
         }
+
       });
 
-    console.log("questions:", questions);
-    console.log("answers:", answers);
+
+    console.log(questions);
+    console.log(answers);
 
     selectTodayQuestion(questions);
+
     drawChart(answers);
 
   })
-  .catch(err => {
-    console.error(err);
-    document.getElementById("question").innerText = "読み込み失敗";
+
+  .catch(error => {
+
+    console.error(error);
+
+    document.getElementById("question").innerText =
+      "読み込み失敗";
+
   });
+
 }
 
+
 // --------------------
-// 今日の質問（固定）
+// 今日の質問
 // --------------------
 function selectTodayQuestion(questions) {
 
-  if (!questions.length) {
-    document.getElementById("question").innerText = "質問がまだありません";
+  if (questions.length === 0) {
+
+    document.getElementById("question").innerText =
+      "質問がありません";
+
     return;
   }
 
-  const today = new Date().toISOString().slice(0,10);
+  const today = new Date().toISOString().slice(0, 10);
 
   let hash = 0;
+
   for (let i = 0; i < today.length; i++) {
+
     hash += today.charCodeAt(i);
+
   }
 
   const index = hash % questions.length;
 
-  todayQuestion = questions[index].text;
   todayQuestionId = questions[index].id;
 
-  document.getElementById("question").innerText = todayQuestion;
+  todayQuestion = questions[index].text;
+
+  document.getElementById("question").innerText =
+    todayQuestion;
+
 }
 
+
 // --------------------
-// 回答送信
+// 回答
 // --------------------
 function submitAnswer(answer) {
 
@@ -131,8 +160,11 @@ function submitQuestion() {
   const q = document.getElementById("newQuestion").value;
 
   if (!q) {
+
     alert("質問を入力してください");
+
     return;
+
   }
 
   fetch(
@@ -144,7 +176,9 @@ function submitQuestion() {
       })
     }
   )
+
   .then(response => response.text())
+
   .then(data => {
 
     alert("投稿しました");
@@ -154,15 +188,18 @@ function submitQuestion() {
     loadData();
 
   })
+
   .catch(error => {
 
     console.error(error);
 
-    alert("投稿に失敗しました");
+    alert("投稿失敗");
 
   });
 
 }
+
+
 // --------------------
 // グラフ
 // --------------------
@@ -171,21 +208,70 @@ function drawChart(answers) {
   let yes = 0;
   let no = 0;
 
-  answers.forEach(a => {
-    if (a === "はい") yes++;
-    if (a === "いいえ") no++;
-  });
+  answers.forEach(item => {
 
-  if (chart) chart.destroy();
+    if (item.answer === "はい") {
 
-  chart = new Chart(document.getElementById("chart"), {
-    type: "bar",
-    data: {
-      labels: ["はい", "いいえ"],
-      datasets: [{
-        label: "回答数",
-        data: [yes, no]
-      }]
+      yes++;
+
     }
+
+    if (item.answer === "いいえ") {
+
+      no++;
+
+    }
+
   });
+
+
+  if (chart) {
+
+    chart.destroy();
+
+  }
+
+
+  chart = new Chart(
+
+    document.getElementById("chart"),
+
+    {
+
+      type: "bar",
+
+      data: {
+
+        labels: ["はい", "いいえ"],
+
+        datasets: [{
+
+          label: "回答数",
+
+          data: [yes, no]
+
+        }]
+
+      },
+
+      options: {
+
+        responsive: true,
+
+        scales: {
+
+          y: {
+
+            beginAtZero: true
+
+          }
+
+        }
+
+      }
+
+    }
+
+  );
+
 }
