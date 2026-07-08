@@ -160,45 +160,40 @@ function submitQuestion() {
   const q = document.getElementById("newQuestion").value;
 
   if (!q) {
-
     alert("質問を入力してください");
-
     return;
-
   }
+
+  const form = new FormData();
+
+  form.append("question", q);
 
   fetch(
     "https://script.google.com/macros/s/AKfycbwyrru1W9mptenFPy5mU5ihBYiYLqod9zcZanZI7qnyx14BteotGJGtlE-z2pDHUFA3/exec",
     {
       method: "POST",
-      body: JSON.stringify({
-        question: q
-      })
+      body: form
     }
   )
+  .then(r => r.text())
+  .then(() => {
 
-  .then(response => response.text())
+      alert("投稿しました");
 
-  .then(data => {
+      document.getElementById("newQuestion").value="";
 
-    alert("投稿しました");
-
-    document.getElementById("newQuestion").value = "";
-
-    loadData();
+      loadData();
 
   })
+  .catch(err => {
 
-  .catch(error => {
+      console.error(err);
 
-    console.error(error);
-
-    alert("投稿失敗");
+      alert("投稿失敗");
 
   });
 
 }
-
 
 // --------------------
 // グラフ
