@@ -3,35 +3,53 @@ import { db } from "./firebase.js";
 import {
   collection,
   addDoc,
-  getDocs,
+  serverTimestamp,
+  onSnapshot,
   query,
   orderBy,
-  serverTimestamp
+  updateDoc,
+  doc,
+  increment
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-// ボタン
-const submitButton = document.getElementById("submit");
 
-// 投稿
-submitButton.addEventListener("click", async () => {
+// ===============================
+// 投稿機能
+// ===============================
 
-  const title = document.getElementById("title").value.trim();
-  const problem = document.getElementById("problem").value.trim();
+const submitBtn = document.getElementById("submit");
+
+
+submitBtn.addEventListener("click", async () => {
+
+  const title = document.getElementById("title").value;
+  const problem = document.getElementById("problem").value;
   const category = document.getElementById("category").value;
-  const description = document.getElementById("description").value.trim();
+  const description = document.getElementById("description").value;
 
-  if (!title || !problem || !description) {
-    alert("すべて入力してください");
+
+  if (
+    title === "" ||
+    problem === "" ||
+    description === ""
+  ) {
+
+    alert("未入力の項目があります");
     return;
+
   }
+
 
   try {
 
-    await addDoc(collection(db, "ideas"), {
+    await addDoc(collection(db,"ideas"),{
 
       title: title,
+
       problem: problem,
+
       category: category,
+
       description: description,
 
       votes: 0,
@@ -40,84 +58,226 @@ submitButton.addEventListener("click", async () => {
 
     });
 
+
     alert("投稿しました！");
 
-    document.getElementById("title").value = "";
-    document.getElementById("problem").value = "";
-    document.getElementById("description").value = "";
 
-    loadIdeas();
+    document.getElementById("title").value="";
+    document.getElementById("problem").value="";
+    document.getElementById("description").value="";
 
-  }
 
-  catch(error){
+  } catch(error){
 
     console.error(error);
 
-    alert("投稿できませんでした");
+    alert("投稿に失敗しました");
 
   }
 
 });
 
 
-// 一覧表示
-async function loadIdeas(){
 
-  const list=document.getElementById("ideaList");
 
-  list.innerHTML="";
+// ===============================
+// 投稿一覧表示
+// ===============================
 
-  const q=query(
-    collection(db,"ideas"),
-    orderBy("createdAt","desc")
-  );
 
-  const snapshot=await getDocs(q);
+const ideaList = document.getElementById("ideaList");
+
+
+const q = query(
+
+  collection(db,"ideas"),
+
+  orderBy("createdAt","desc")
+
+);
+
+
+
+onSnapshot(q,(snapshot)=>{
+
+
+  ideaList.innerHTML="";
+
 
   if(snapshot.empty){
 
-    list.innerHTML="<p>まだ投稿はありません。</p>";
+    ideaList.innerHTML=
+    "<p>まだ投稿はありません</p>";
 
     return;
 
   }
 
-  snapshot.forEach(doc=>{
 
-    const data=doc.data();
 
-    const card=document.createElement("div");
+  snapshot.forEach((docSnap)=>{
 
-    card.style.border="1px solid #ccc";
-    card.style.padding="15px";
-    card.style.marginBottom="15px";
-    card.style.borderRadius="10px";
 
-    card.innerHTML=`
+    const data = docSnap.data();
 
-<h3>${data.title}</h3>
 
-<p><b>解決するモヤっと</b></p>
+    const div = document.createElement("div");
 
-<p>${data.problem}</p>
 
-<p><b>カテゴリー</b></p>
+    div.className="idea-card";
 
-<p>${data.category}</p>
 
-<p><b>アイデア</b></p>
 
-<p>${data.description}</p>
+    div.innerHTML = `
 
-<p>👍 ${data.votes}票</p>
+      <h3>
+      💡 ${data.title}
+      </h3>
 
-`;
 
-    list.appendChild(card);
+      <p>
+      <b>解決したいモヤっと：</b>
+      ${data.problem}
+      </p>
+
+
+      <p>
+      <b>カテゴリー：</b>
+      ${data.category}
+      </p>
+
+
+      <p>
+      ${data.description}
+      </p>
+
+
+      <button class="vote-btn"
+      data-id="${docSnap.id}">
+      👍 ${data.votes || 0}
+      </button>
+
+
+      <hr>
+
+    `;
+
+
+
+    ideaList.appendChild(div);
+
 
   });
 
-}
 
-loadIdeas();
+
+  // 投票ボタン設定
+
+  const buttons =
+  document.querySelectorAll(".vote-btn");
+
+
+  buttons.forEach(button=>{
+
+
+    button.addEventListener("click",async()=>{
+
+
+      const id =
+      button.dataset.id;
+
+
+
+      const ref =
+      doc(db,"ideas",id);
+
+
+
+      await updateDoc(ref,{
+
+        votes:increment(1)
+
+      });
+
+
+    });
+
+
+  });
+
+
+
+});
+
+
+
+
+// ===============================
+// ランキング表示
+// ===============================
+
+
+const ranking =
+document.getElementById("ranking");
+
+
+
+const rankingQuery = query(
+
+collection(db,"ideas"),
+
+orderBy("votes","desc")
+
+);
+
+
+
+onSnapshot(rankingQuery,(snapshot)=>{
+
+
+  ranking.innerHTML="";
+
+
+  let count=0;
+
+
+  snapshot.forEach((docSnap)=>{
+
+
+    if(count>=5)return;
+
+
+    const data=docSnap.data();
+
+
+
+    ranking.innerHTML += `
+
+    <p>
+    ${count+1}位 🏆
+
+    ${data.title}
+
+    👍${data.votes || 0}
+
+    </p>
+
+    `;
+
+
+    count++;
+
+
+  });
+
+
+
+  if(count===0){
+
+    ranking.innerHTML=
+    "<p>まだランキングはありません</p>";
+
+  }
+
+
+});
