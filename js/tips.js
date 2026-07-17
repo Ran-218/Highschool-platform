@@ -13,18 +13,6 @@ import {
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 import { db } from "./firebase.js";
 
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  onSnapshot,
-  query,
-  orderBy,
-  updateDoc,
-  doc,
-  increment
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
 
 // ===============================
 // 投稿機能
