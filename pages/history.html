@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>歴代月間大賞</title>
+
+<style>
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:#f5f5f5;
+
+margin:40px;
+
+}
+
+h1{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.award{
+
+background:white;
+
+padding:20px;
+
+margin-bottom:25px;
+
+border-radius:10px;
+
+box-shadow:0 0 8px rgba(0,0,0,0.1);
+
+}
+
+.month{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#d68b00;
+
+}
+
+.title{
+
+font-size:24px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
+.info{
+
+color:#666;
+
+margin:10px 0;
+
+}
+
+.likes{
+
+font-size:18px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+
+🏆 歴代月間大賞
+
+</h1>
+
+<div id="history">
+
+読み込み中...
+
+</div>
+
+<script type="module">
+
+import { db } from "../firebase.js";
+
+import {
+
+collection,
+
+query,
+
+orderBy,
+
+getDocs
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+
+async function loadHistory(){
+
+const q=query(
+
+collection(db,"monthlyAwards"),
+
+orderBy("month","desc")
+
+);
+
+const snapshot=await getDocs(q);
+
+let html="";
+
+if(snapshot.empty){
+
+html="<h2>まだ月間大賞はありません。</h2>";
+
+}
+
+snapshot.forEach((doc)=>{
+
+const a=doc.data();
+
+html+=`
+
+<div class="award">
+
+<div class="month">
+
+${a.month} 月間大賞
+
+</div>
+
+<div class="title">
+
+${a.title}
+
+</div>
+
+<div class="info">
+
+投稿者：${a.author}
+
+</div>
+
+<div class="info">
+
+カテゴリー：${a.category}
+
+</div>
+
+<div class="info">
+
+言語：${a.language}
+
+</div>
+
+<div class="likes">
+
+👍 ${a.likes}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("history").innerHTML=html;
+
+}
+
+loadHistory();
+
+</script>
+
+</body>
+
+</html>
