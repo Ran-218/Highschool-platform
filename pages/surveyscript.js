@@ -2,7 +2,7 @@
 // Firebase import
 // ============================
 
-import { db } from "../js/surveyfirebase.js";
+import { SurveyDB } from "../js/surveyfirebase.js";
 
 import {
   collection,
@@ -39,7 +39,7 @@ async function loadData(){
 
 
     const questionSnap =
-      await getDocs(collection(db,"questions"));
+      await getDocs(collection(surveyDB,"questions"));
 
 
     const questions = [];
@@ -65,7 +65,7 @@ async function loadData(){
 
 
     const answerSnap =
-      await getDocs(collection(db,"answers"));
+      await getDocs(collection(surveyDB,"answers"));
 
 
 
