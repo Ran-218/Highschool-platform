@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>記事投稿</title>
+</head>
+
+<body>
+
+<h1>高校生記事プラットフォーム</h1>
+
+<h2>記事を書く</h2>
+
+<input id="title" placeholder="タイトル">
+
+<br>
+
+<input id="author" placeholder="名前">
+
+<br>
+
+<select id="category">
+
+<option>日本経済分析記事</option>
+<option>世界経済分析記事</option>
+<option>ビジネス分析記事</option>
+<option>ビジネス構想記事</option>
+<option>インタビュー記事</option>
+<option>その他</option>
+
+</select>
+
+
+<select id="language">
+<option>日本語</option>
+<option>English</option>
+</select>
+
+
+<br>
+
+<textarea id="content"
+placeholder="本文"
+rows="10"
+cols="50">
+</textarea>
+
+
+<br>
+
+<button onclick="postArticle()">
+投稿する
+</button>
+
+
+<hr>
+
+<h2>記事一覧</h2>
+
+<div id="articles"></div>
+
+
+<script type="module" src="../articles.js"></script>
+
+</body>
+</html>
