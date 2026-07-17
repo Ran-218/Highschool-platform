@@ -60,7 +60,7 @@ await addDoc(collection(db,"ideas"),{
 
   month: now.getMonth()+1
 
-});(
+});
 
 
     alert("投稿しました！");
