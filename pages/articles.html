@@ -1,66 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
-<title>記事投稿</title>
+
+<title>記事</title>
+
+<style>
+
+body{
+
+font-family:Arial,sans-serif;
+
+margin:40px;
+
+background:#f7f7f7;
+
+}
+
+h1{
+
+text-align:center;
+
+}
+
+.container{
+
+background:white;
+
+padding:20px;
+
+border-radius:10px;
+
+margin-bottom:30px;
+
+box-shadow:0 0 10px rgba(0,0,0,.1);
+
+}
+
+input,select,textarea{
+
+width:100%;
+
+padding:10px;
+
+margin-top:10px;
+
+margin-bottom:15px;
+
+box-sizing:border-box;
+
+font-size:16px;
+
+}
+
+textarea{
+
+height:250px;
+
+resize:vertical;
+
+}
+
+button{
+
+padding:10px 20px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+.article{
+
+background:white;
+
+padding:20px;
+
+margin-top:20px;
+
+border-radius:10px;
+
+box-shadow:0 0 5px rgba(0,0,0,.1);
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>高校生記事プラットフォーム</h1>
+<h1>
 
-<h2>記事を書く</h2>
+高校生記事プラットフォーム
 
-<input id="title" placeholder="タイトル">
+</h1>
 
-<br>
+<div class="container">
 
-<input id="author" placeholder="名前">
+<h2>
 
-<br>
+記事を書く
+
+</h2>
+
+<input
+
+id="title"
+
+placeholder="タイトル">
+
+<input
+
+id="author"
+
+placeholder="名前">
 
 <select id="category">
 
 <option>日本経済分析記事</option>
+
 <option>世界経済分析記事</option>
+
 <option>ビジネス分析記事</option>
+
 <option>ビジネス構想記事</option>
+
 <option>インタビュー記事</option>
+
 <option>その他</option>
 
 </select>
 
-
 <select id="language">
+
 <option>日本語</option>
+
 <option>English</option>
+
 </select>
 
+<textarea
 
-<br>
+id="content"
 
-<textarea id="content"
-placeholder="本文"
-rows="10"
-cols="50">
-</textarea>
-
-
-<br>
+placeholder="本文を書いてください"></textarea>
 
 <button onclick="postArticle()">
+
 投稿する
+
 </button>
 
+</div>
 
-<hr>
+<h2>
 
-<h2>記事一覧</h2>
+記事一覧
 
-<div id="articles"></div>
+</h2>
 
+<div id="articles">
+
+読み込み中...
+
+</div>
 
 <script type="module" src="../articles.js"></script>
 
 </body>
+
 </html>
