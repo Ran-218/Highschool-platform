@@ -1,3 +1,16 @@
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+  doc,
+  increment,
+  where
+}
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 import { db } from "./firebase.js";
 
 import {
@@ -42,21 +55,24 @@ submitBtn.addEventListener("click", async () => {
 
   try {
 
-    await addDoc(collection(db,"ideas"),{
+    const now = new Date();
 
-      title: title,
+await addDoc(collection(db,"ideas"),{
 
-      problem: problem,
+  title: title,
+  problem: problem,
+  category: category,
+  description: description,
 
-      category: category,
+  votes: 0,
 
-      description: description,
+  createdAt: serverTimestamp(),
 
-      votes: 0,
+  year: now.getFullYear(),
 
-      createdAt: serverTimestamp()
+  month: now.getMonth()+1
 
-    });
+});(
 
 
     alert("投稿しました！");
@@ -222,11 +238,17 @@ document.getElementById("ranking");
 
 
 
+const now = new Date();
+
 const rankingQuery = query(
 
-collection(db,"ideas"),
+  collection(db,"ideas"),
 
-orderBy("votes","desc")
+  where("year","==",now.getFullYear()),
+
+  where("month","==",now.getMonth()+1),
+
+  orderBy("votes","desc")
 
 );
 
