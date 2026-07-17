@@ -2,7 +2,7 @@
 // Firebase import
 // ============================
 
-import { db } from "../js/firebase.js";
+import { db } from "../js/surveyfirebase.js";
 
 import {
   collection,
