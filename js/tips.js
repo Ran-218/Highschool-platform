@@ -12,7 +12,7 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 import { db } from "./firebase.js";
-
+console.log("tips.js が読み込まれました");
 
 // ===============================
 // 投稿機能
