@@ -1,0 +1,225 @@
+/* =========================
+   全体
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:"Yu Gothic","Meiryo",sans-serif;
+
+    background:#eef8f8;
+
+    padding:40px;
+
+}
+
+/* =========================
+   コンテナ
+========================= */
+
+.container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+/* =========================
+   タイトル
+========================= */
+
+.title-box{
+
+    background:linear-gradient(90deg,#40E0D0,#66E8DB);
+
+    color:white;
+
+    padding:30px;
+
+    border-radius:18px 18px 0 0;
+
+}
+
+.title-box h1{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+}
+
+/* =========================
+   カード全体
+========================= */
+
+.card-grid{
+
+    background:white;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+    padding:30px;
+
+    border-radius:0 0 18px 18px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+/* =========================
+   1枚のカード
+========================= */
+
+.card{
+
+    background:white;
+
+    border:2px solid #dddddd;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+/* =========================
+   画像
+========================= */
+
+.card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+}
+
+/* =========================
+   タイトル
+========================= */
+
+.card h2{
+
+    text-align:center;
+
+    color:#28bdb0;
+
+    font-size:28px;
+
+    padding:25px 15px;
+
+    min-height:110px;
+
+}
+
+/* =========================
+   ボタン
+========================= */
+
+.btn{
+
+    display:block;
+
+    width:85%;
+
+    margin:20px auto 25px;
+
+    padding:15px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:#40E0D0;
+
+    color:white;
+
+    border-radius:10px;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    background:#20b2aa;
+
+}
+
+/* =========================
+   タブレット
+========================= */
+
+@media(max-width:1000px){
+
+.card-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+/* =========================
+   スマホ
+========================= */
+
+@media(max-width:650px){
+
+body{
+
+padding:15px;
+
+}
+
+.title-box h1{
+
+font-size:30px;
+
+}
+
+.card-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.card h2{
+
+font-size:22px;
+
+}
+
+.btn{
+
+font-size:20px;
+
+}
+
+}
