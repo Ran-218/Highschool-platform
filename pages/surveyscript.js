@@ -185,7 +185,7 @@ window.submitAnswer = async function(answer){
 
     await addDoc(
 
-      collection(db,"answers"),
+      collection(surveyDB,"answers"),
 
       {
 
@@ -258,7 +258,7 @@ window.submitQuestion = async function(){
 
     await addDoc(
 
-      collection(db,"questions"),
+      collection(surveyDB,"questions"),
 
       {
 
