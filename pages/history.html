@@ -98,95 +98,92 @@ font-size:18px;
 import { db } from "../firebase.js";
 
 import {
-
-collection,
-
-query,
-
-orderBy,
-
-getDocs
-
+  collection,
+  query,
+  orderBy,
+  getDocs
 }
-
 from
-
 "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 async function loadHistory(){
 
-const q=query(
+  const history = document.getElementById("history");
 
-collection(db,"monthlyAwards"),
+  try {
 
-orderBy("month","desc")
+    const q = query(
+      collection(db, "monthlyAwards"),
+      orderBy("month", "desc")
+    );
 
-);
+    const snapshot = await getDocs(q);
 
-const snapshot=await getDocs(q);
+    let html = "";
 
-let html="";
+    if(snapshot.empty){
 
-if(snapshot.empty){
+      history.innerHTML =
+        "<h2>まだ月間大賞はありません。</h2>";
 
-html="<h2>まだ月間大賞はありません。</h2>";
+      return;
+
+    }
+
+    snapshot.forEach((docSnap) => {
+
+      const a = docSnap.data();
+
+      html += `
+
+        <div class="award">
+
+          <div class="month">
+            ${a.month} 月間大賞
+          </div>
+
+          <div class="title">
+            ${a.title || ""}
+          </div>
+
+          <div class="info">
+            投稿者：${a.author || ""}
+          </div>
+
+          <div class="info">
+            カテゴリー：${a.category || ""}
+          </div>
+
+          <div class="info">
+            言語：${a.language || ""}
+          </div>
+
+          <div class="likes">
+            👍 ${a.likes || 0}
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+    history.innerHTML = html;
+
+  } catch(error) {
+
+    console.error("月間大賞の読み込みエラー:", error);
+
+    history.innerHTML = `
+      <h2>月間大賞を読み込めませんでした。</h2>
+      <p>${error.message}</p>
+    `;
+
+  }
 
 }
 
-snapshot.forEach((doc)=>{
-
-const a=doc.data();
-
-html+=`
-
-<div class="award">
-
-<div class="month">
-
-${a.month} 月間大賞
-
-</div>
-
-<div class="title">
-
-${a.title}
-
-</div>
-
-<div class="info">
-
-投稿者：${a.author}
-
-</div>
-
-<div class="info">
-
-カテゴリー：${a.category}
-
-</div>
-
-<div class="info">
-
-言語：${a.language}
-
-</div>
-
-<div class="likes">
-
-👍 ${a.likes}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-document.getElementById("history").innerHTML=html;
-
-}
 
 loadHistory();
 
