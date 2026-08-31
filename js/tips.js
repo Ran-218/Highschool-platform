@@ -68,6 +68,7 @@ await addDoc(collection(db,"ideas"),{
     alert("投稿しました！");
 
 
+    document.getElementById("author").value="";
     document.getElementById("title").value="";
     document.getElementById("problem").value="";
     document.getElementById("description").value="";
