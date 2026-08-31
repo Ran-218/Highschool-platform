@@ -1,4 +1,4 @@
-.// ============================
+// ============================
 // Firebase初期化（Survey専用）
 // ============================
 
@@ -8,8 +8,9 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getFirestore } 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-
+// ============================
 // Firebase設定
+// ============================
 
 const firebaseConfig = {
 
@@ -27,12 +28,14 @@ const firebaseConfig = {
 
 };
 
-
+// ============================
 // Firebase開始
+// ============================
 
 const app = initializeApp(firebaseConfig);
 
-
+// ============================
 // Survey用Firestore
+// ============================
 
 export const surveyDB = getFirestore(app);
