@@ -25,7 +25,7 @@ window.postArticle = async function () {
   const content = document.getElementById("content").value.trim();
 
   if (!title || !author || !content) {
-    alert("タイトル・名前・本文を入力してください。");
+    alert("タイトル・投稿者名・本文を入力してください。");
     return;
   }
 
