@@ -30,6 +30,7 @@ submitBtn.addEventListener("click", async () => {
 
 
   if (
+    author === "" ||
     title === "" ||
     problem === "" ||
     description === ""
