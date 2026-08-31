@@ -48,6 +48,7 @@ submitBtn.addEventListener("click", async () => {
 
 await addDoc(collection(db,"ideas"),{
 
+  author: author,
   title: title,
   problem: problem,
   category: category,
