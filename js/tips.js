@@ -143,11 +143,11 @@ onSnapshot(q,(snapshot)=>{
 
 
       <p>
-			<b>投稿者：</b>
-			${data.author || "匿名"}
-			</p>
-
-
+      <b>投稿者：</b>
+      ${data.author || "匿名"}
+      </p>
+      
+      
       <p>
       <b>解決したいモヤっと：</b>
       ${data.problem}
