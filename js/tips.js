@@ -22,7 +22,7 @@ const submitBtn = document.getElementById("submit");
 
 submitBtn.addEventListener("click", async () => {
 
-	const author = document.getElementById("author").value;
+  const author = document.getElementById("author").value;
   const title = document.getElementById("title").value;
   const problem = document.getElementById("problem").value;
   const category = document.getElementById("category").value;
