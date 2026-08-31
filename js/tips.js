@@ -276,6 +276,11 @@ onSnapshot(rankingQuery,(snapshot)=>{
     ${count+1}位 🏆
 
     ${data.title}
+    
+    <br>
+    投稿者：${data.author || "匿名"}
+    
+    <br>
 
     👍${data.votes || 0}
 
