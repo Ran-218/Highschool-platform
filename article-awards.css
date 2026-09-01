@@ -1,0 +1,167 @@
+/* ========================================
+   歴代月間大賞記事
+======================================== */
+/* 表を横スクロール可能にする */
+
+.article-award-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ========================================
+   表全体
+======================================== */
+
+.article-award-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  margin-top: 25px;
+  background: white;
+  font-size: 16px;
+}
+
+
+/* ========================================
+   表の見出し
+======================================== */
+
+.article-award-table th {
+  background-color: #00aeb5;
+  color: white;
+
+  font-weight: bold;
+
+  padding: 10px;
+
+  text-align: center;
+
+  border: 1px solid #00aeb5;
+}
+
+
+/* ========================================
+   1行目
+======================================== */
+
+.article-info-row td {
+  padding: 10px;
+
+  border-left: 1px solid #00aeb5;
+  border-right: 1px solid #00aeb5;
+
+  vertical-align: middle;
+
+  background-color: #d9f3f4;
+}
+
+
+/* ========================================
+   2行目＝記事本文
+======================================== */
+
+.article-content-row td {
+
+  padding: 18px;
+
+  /* 横方向の仕切りをなくす */
+
+  border-left: 1px solid #00aeb5;
+  border-right: 1px solid #00aeb5;
+
+  border-top: none;
+  border-bottom: 20px solid white;
+
+  background-color: white;
+
+  text-align: left;
+
+}
+
+
+/* 本文 */
+
+.article-content {
+
+  width: 100%;
+
+  line-height: 1.8;
+
+  font-size: 16px;
+
+  white-space: normal;
+
+}
+
+
+/* ========================================
+   記事タイトル
+======================================== */
+
+.article-award-title {
+
+  font-weight: bold;
+
+}
+
+
+/* ========================================
+   いいね数
+======================================== */
+
+.article-award-likes {
+
+  text-align: center;
+
+  white-space: nowrap;
+
+}
+
+
+/* ========================================
+   最後の本文の下に余白を作る
+======================================== */
+
+.article-award-table tbody
+.article-content-row:last-child td {
+
+  border-bottom: none;
+
+}
+
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 700px) {
+
+  .article-award-table {
+
+    font-size: 13px;
+
+  }
+
+  .article-award-table th,
+  .article-info-row td {
+
+    padding: 7px;
+
+  }
+
+  .article-content-row td {
+
+    padding: 15px;
+
+  }
+
+  .article-content {
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+  }
+
+}
