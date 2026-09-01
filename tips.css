@@ -1,0 +1,84 @@
+/* =========================
+   歴代月間大賞
+========================= */
+.award-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  font-size: 16px;
+  background-color: white;
+}
+
+/* 表の見出し */
+
+.award-table th {
+  background-color: #00aeb5;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #00aeb5;
+}
+
+/* 表のセル */
+
+.award-table td {
+  padding: 10px;
+  border: 1px solid #00aeb5;
+  vertical-align: middle;
+}
+
+/* 偶数行 */
+
+.award-table tbody tr:nth-child(even) {
+  background-color: #d9f3f4;
+}
+
+/* 奇数行 */
+
+.award-table tbody tr:nth-child(odd) {
+  background-color: #eefafa;
+}
+
+/* アイデア名 */
+
+.award-title {
+  font-weight: bold;
+}
+
+/* モヤっと */
+
+.award-problem {
+  line-height: 1.6;
+}
+
+/* 商品説明 */
+
+.award-description {
+  line-height: 1.6;
+}
+
+/* いいね数 */
+
+.award-likes {
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+/* =========================
+   スマートフォン対応
+========================= */
+
+@media (max-width: 700px) {
+
+  .award-table {
+    font-size: 13px;
+  }
+
+  .award-table th,
+  .award-table td {
+    padding: 7px;
+  }
+
+}
