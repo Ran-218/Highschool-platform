@@ -1,5 +1,4 @@
 // 歴代月間大賞データ
-// 新しい月を追加するときは、ここに1行追加するだけです。
 
 const awards = [
 
@@ -7,6 +6,7 @@ const awards = [
     month: "2026/7",
     title: "どこでもモバ充",
     author: "非公開",
+    problem: "気づいた時には携帯の充電がなくなっている。",
     likes: 3,
     description: "コンパクトサイズでスマホにずっと接続していても落とす心配がなく、かつ充電が50％を切った時に充電を始めてくれて過充電の心配がないモバイルバッテリー。"
   },
@@ -15,6 +15,7 @@ const awards = [
     month: "2026/6",
     title: "テスト2",
     author: "カメレオンラヴァー",
+    problem: "〇〇〇〇に困っている",
     likes: 2,
     description: "カメレオンの幸せを願うするためのアイデアです。"
   },
@@ -23,6 +24,7 @@ const awards = [
     month: "2026/5",
     title: "テスト1",
     author: "元気のこ",
+    problem: "〇〇〇〇をもっと便利にしたい",
     likes: 98,
     description: "きのこ採集をもっと便利にするためのアイデア"
   }
@@ -30,7 +32,6 @@ const awards = [
 ];
 
 
-// 表を表示
 const awardList = document.getElementById("awardList");
 
 let html = `
@@ -43,8 +44,9 @@ let html = `
       <th>月</th>
       <th>アイデア名</th>
       <th>投稿者名</th>
-      <th>いいね数</th>
+      <th>解決したいモヤっと</th>
       <th>商品説明</th>
+      <th>いいね数</th>
     </tr>
 
   </thead>
@@ -53,7 +55,6 @@ let html = `
 `;
 
 
-// 1行ずつ追加
 awards.forEach((award) => {
 
   html += `
@@ -70,12 +71,16 @@ awards.forEach((award) => {
         ${award.author}
       </td>
 
-      <td class="award-likes">
-        👍 ${award.likes}
+      <td class="award-problem">
+        ${award.problem}
       </td>
 
       <td class="award-description">
         ${award.description}
+      </td>
+
+      <td class="award-likes">
+        👍 ${award.likes}
       </td>
 
     </tr>
@@ -93,6 +98,4 @@ html += `
 
 `;
 
-
-// HTMLに表示
 awardList.innerHTML = html;
