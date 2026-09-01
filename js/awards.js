@@ -1,102 +1,98 @@
-import { db } from "./firebase.js";
+// 歴代月間大賞データ
+// 新しい月を追加するときは、ここに1行追加するだけです。
 
-import {
-collection,
-query,
-orderBy,
-onSnapshot
-}
-from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+const awards = [
 
-const awardList =
-document.getElementById("awardList");
+  {
+    month: "2026/7",
+    title: "どこでもモバ充",
+    author: "非公開",
+    likes: 3,
+    description: "外出先でもスマートフォンを簡単に充電できる。"
+  },
 
-const q = query(
+  {
+    month: "2026/6",
+    title: "テスト2",
+    author: "カメレオンラヴァー",
+    likes: 2,
+    description: "カメレオンの幸せを願うするためのアイデアです。"
+  },
 
-collection(db,"ideas"),
+  {
+    month: "2026/5",
+    title: "テスト1",
+    author: "元気のこ",
+    likes: 98,
+    description: "きのこ採集をもっと便利にするためのアイデア"
+  }
 
-orderBy("year","desc"),
+];
 
-orderBy("month","desc"),
 
-orderBy("votes","desc")
+// 表を表示
+const awardList = document.getElementById("awardList");
 
-);
+let html = `
 
-onSnapshot(q,(snapshot)=>{
+<table class="award-table">
 
-awardList.innerHTML="";
+  <thead>
 
-let groups={};
+    <tr>
+      <th>月</th>
+      <th>アイデア名</th>
+      <th>投稿者名</th>
+      <th>いいね数</th>
+      <th>商品説明</th>
+    </tr>
 
-snapshot.forEach(doc=>{
+  </thead>
 
-const data=doc.data();
+  <tbody>
+`;
 
-const key=`${data.year}年${data.month}月`;
 
-if(!groups[key]){
+// 1行ずつ追加
+awards.forEach((award) => {
 
-groups[key]=[];
+  html += `
 
-}
+    <tr>
 
-groups[key].push(data);
+      <td>${award.month}</td>
+
+      <td class="award-title">
+        ${award.title}
+      </td>
+
+      <td>
+        ${award.author}
+      </td>
+
+      <td class="award-likes">
+        👍 ${award.likes}
+      </td>
+
+      <td class="award-description">
+        ${award.description}
+      </td>
+
+    </tr>
+
+  `;
 
 });
 
-for(const month in groups){
 
-const ideas=groups[month];
+html += `
 
-awardList.innerHTML+=`
+  </tbody>
 
-<h2>${month}</h2>
-
-`;
-
-if(ideas[0]){
-
-awardList.innerHTML+=`
-
-<div class="idea-card">
-
-<h3>🥇 大賞</h3>
-
-<h4>${ideas[0].title}</h4>
-
-<p>👍 ${ideas[0].votes}票</p>
-
-<p>${ideas[0].problem}</p>
-
-</div>
+</table>
 
 `;
 
-}
 
-if(ideas[1]){
-
-awardList.innerHTML+=`
-
-<div class="idea-card">
-
-<h3>🥈 副賞</h3>
-
-<h4>${ideas[1].title}</h4>
-
-<p>👍 ${ideas[1].votes}票</p>
-
-<p>${ideas[1].problem}</p>
-
-</div>
-
-`;
-
-}
-
-awardList.innerHTML+="<hr>";
-
-}
-
-});
+// HTMLに表示
+awardList.innerHTML = html;
