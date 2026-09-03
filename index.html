@@ -17,6 +17,40 @@
     <h1>高校生プラットフォーム</h1>
   </div>
 
+
+  <!-- =========================
+       ① 閲覧カウンター
+  ========================= -->
+
+  <div class="view-section">
+
+    <div class="view-button-area">
+
+      <button id="viewButton" class="push-button">
+        <span>PUSH</span>
+      </button>
+
+      <p class="view-notice">
+        閲覧時に一回クリックしてください。
+      </p>
+
+    </div>
+
+    <div class="view-count-area">
+
+      <p class="view-count-label">
+        総閲覧数
+      </p>
+
+      <p id="viewCount" class="view-count">
+        0
+      </p>
+
+    </div>
+
+  </div>
+
+
   <div class="card-grid">
 
     <!-- 1 -->
@@ -75,7 +109,227 @@
 
   </div>
 
+
+  <!-- =========================
+       ② レビュー・VOICE
+  ========================= -->
+
+  <section class="voice-section">
+
+    <h2 class="voice-title">
+      本サイトへのレビュー
+    </h2>
+
+    <p class="voice-description">
+      高校生プラットフォームを使ってみた感想を教えてください！
+    </p>
+
+    <!-- Googleフォーム -->
+    <div class="google-form">
+
+      <iframe
+        src="ここにGoogleフォームの埋め込みURLを入れる"
+        width="100%"
+        height="700"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0">
+        読み込んでいます…
+      </iframe>
+
+    </div>
+
+
+    <!-- VOICE -->
+
+    <h2 class="voice-heading">
+      VOICE
+    </h2>
+
+
+    <div class="voice-list">
+
+      <div class="voice-card">
+        <p class="voice-text">
+          「高校生のリアルな悩みや意見を見ることができて面白かったです！」
+        </p>
+      </div>
+
+      <div class="voice-card">
+        <p class="voice-text">
+          「自分と同じようなモヤモヤを抱えている人がいて安心しました。」
+        </p>
+      </div>
+
+      <div class="voice-card">
+        <p class="voice-text">
+          「いろいろなアイデアを見ることができて、新しい考え方を知れました。」
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
+
+
+<!-- =========================
+     Firebase
+========================= -->
+
+<script type="module">
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+  // ==========================================
+  // ここに現在使用しているFirebase設定を入れる
+  // ==========================================
+
+  const firebaseConfig = {
+
+    apiKey: "あなたのAPIキー",
+    authDomain: "あなたのプロジェクト.firebaseapp.com",
+    projectId: "あなたのプロジェクトID",
+    storageBucket: "あなたのプロジェクト.appspot.com",
+    messagingSenderId: "あなたのSender ID",
+    appId: "あなたのApp ID"
+
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
+
+
+  // ==========================================
+  // 閲覧数
+  // ==========================================
+
+  const viewRef = doc(db, "siteStats", "home");
+
+  const viewCountElement =
+    document.getElementById("viewCount");
+
+  const viewButton =
+    document.getElementById("viewButton");
+
+
+  // 現在の閲覧数を表示
+  async function loadViewCount() {
+
+    try {
+
+      const snapshot = await getDoc(viewRef);
+
+      if (snapshot.exists()) {
+
+        const data = snapshot.data();
+
+        viewCountElement.textContent =
+          Number(data.views || 0).toLocaleString();
+
+      } else {
+
+        viewCountElement.textContent = "0";
+
+      }
+
+    } catch (error) {
+
+      console.error("閲覧数の取得に失敗しました:", error);
+
+    }
+
+  }
+
+
+  // 閲覧ボタン
+  viewButton.addEventListener("click", async () => {
+
+    // 連打防止
+    if (viewButton.disabled) {
+      return;
+    }
+
+    viewButton.disabled = true;
+
+    try {
+
+      await runTransaction(db, async (transaction) => {
+
+        const snapshot =
+          await transaction.get(viewRef);
+
+        let currentViews = 0;
+
+        if (snapshot.exists()) {
+
+          currentViews =
+            Number(snapshot.data().views || 0);
+
+        }
+
+        transaction.set(
+          viewRef,
+          {
+            views: currentViews + 1
+          },
+          {
+            merge: true
+          }
+        );
+
+      });
+
+
+      // 表示を更新
+      const snapshot =
+        await getDoc(viewRef);
+
+      if (snapshot.exists()) {
+
+        const data = snapshot.data();
+
+        viewCountElement.textContent =
+          Number(data.views || 0).toLocaleString();
+
+      }
+
+
+      // 押したことが分かるようにする
+      viewButton.classList.add("pressed");
+
+      viewButton.querySelector("span").textContent =
+        "THANK YOU!";
+
+
+    } catch (error) {
+
+      console.error("閲覧数の更新に失敗しました:", error);
+
+      // エラーの場合はもう一度押せるようにする
+      viewButton.disabled = false;
+
+    }
+
+  });
+
+
+  loadViewCount();
+
+</script>
 
 </body>
 </html>
