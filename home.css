@@ -223,3 +223,415 @@ font-size:20px;
 }
 
 }
+
+/* =========================
+   ① 閲覧カウンター
+========================= */
+
+.view-section{
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:60px;
+
+    padding:35px 50px;
+
+    border-left:2px solid transparent;
+    border-right:2px solid transparent;
+
+}
+
+
+/* =========================
+   PUSHボタン
+========================= */
+
+.view-button-area{
+
+    text-align:center;
+
+}
+
+
+.push-button{
+
+    position:relative;
+
+    width:300px;
+
+    height:130px;
+
+    border:none;
+
+    border-radius:65px;
+
+    background:#ed071c;
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    font-size:55px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 15px 0 #b50012,
+        0 18px 25px rgba(0,0,0,.25);
+
+    transition:.12s;
+
+}
+
+
+/* ボタン上部の立体感 */
+
+.push-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:50%;
+
+    border-radius:65px 65px 35px 35px;
+
+    background:rgba(255,255,255,.08);
+
+    pointer-events:none;
+
+}
+
+
+/* 押したとき */
+
+.push-button:active{
+
+    transform:translateY(12px);
+
+    box-shadow:
+        0 3px 0 #b50012,
+        0 6px 10px rgba(0,0,0,.2);
+
+}
+
+
+/* 押した後 */
+
+.push-button.pressed{
+
+    background:#d00015;
+
+}
+
+
+/* 押した後のTHANK YOU */
+
+.push-button.pressed span{
+
+    font-size:35px;
+
+}
+
+
+/* =========================
+   注意書き
+========================= */
+
+.view-notice{
+
+    margin-top:15px;
+
+    font-size:16px;
+
+    color:#555;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================
+   総閲覧数
+========================= */
+
+.view-count-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+
+.view-count-label{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#333;
+
+    white-space:nowrap;
+
+}
+
+
+.view-count{
+
+    font-size:55px;
+
+    font-weight:900;
+
+    color:#20b2aa;
+
+    line-height:1;
+
+}
+
+
+/* =========================
+   ② VOICE
+========================= */
+
+.voice-section{
+
+    background:white;
+
+    padding:50px 30px 60px;
+
+    border-radius:0 0 18px 18px;
+
+}
+
+
+/* Googleフォームタイトル */
+
+.voice-title{
+
+    text-align:center;
+
+    color:#28bdb0;
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+
+.voice-description{
+
+    text-align:center;
+
+    font-size:18px;
+
+    color:#555;
+
+    margin-bottom:30px;
+
+}
+
+
+/* Googleフォーム */
+
+.google-form{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:0 auto;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+}
+
+
+/* =========================
+   VOICE見出し
+========================= */
+
+.voice-heading{
+
+    text-align:center;
+
+    font-family:Arial,sans-serif;
+
+    font-size:42px;
+
+    letter-spacing:5px;
+
+    color:#28bdb0;
+
+    margin-top:55px;
+
+    margin-bottom:30px;
+
+}
+
+
+/* =========================
+   VOICEカード
+========================= */
+
+.voice-list{
+
+    max-width:900px;
+
+    margin:0 auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+.voice-card{
+
+    background:#f5fbfb;
+
+    border:2px solid #dddddd;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    min-height:150px;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+.voice-text{
+
+    color:#444;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================
+   スマホ対応
+========================= */
+
+@media(max-width:650px){
+
+    .view-section{
+
+        flex-direction:column;
+
+        gap:25px;
+
+        padding:30px 20px;
+
+        text-align:center;
+
+    }
+
+
+    .push-button{
+
+        width:250px;
+
+        height:110px;
+
+        font-size:45px;
+
+    }
+
+
+    .view-count-area{
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+
+    .view-count-label{
+
+        font-size:24px;
+
+    }
+
+
+    .view-count{
+
+        font-size:45px;
+
+    }
+
+
+    .view-notice{
+
+        font-size:14px;
+
+    }
+
+
+    .voice-section{
+
+        padding:40px 15px;
+
+    }
+
+
+    .voice-title{
+
+        font-size:25px;
+
+    }
+
+
+    .voice-heading{
+
+        font-size:34px;
+
+    }
+
+
+    .voice-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .voice-text{
+
+        font-size:16px;
+
+    }
+
+}
