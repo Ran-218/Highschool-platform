@@ -637,3 +637,343 @@ font-size:20px;
     }
 
 }
+
+/* =========================
+   サイト紹介文
+========================= */
+
+.site-introduction{
+
+    margin-top:12px;
+
+    color:white;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    font-weight:500;
+
+    max-width:1100px;
+
+}
+
+
+/* =========================
+   共通セクション見出し
+========================= */
+
+.section-title{
+
+    text-align:center;
+
+    color:#28bdb0;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    margin-bottom:45px;
+
+}
+
+
+/* =========================
+   高校生プラットフォーム
+   各機能の説明
+========================= */
+
+.feature-section{
+
+    background:white;
+
+    padding:55px 50px 60px;
+
+}
+
+
+/* =========================
+   各機能
+========================= */
+
+.feature-item{
+
+    max-width:1000px;
+
+    margin:0 auto 28px;
+
+}
+
+
+.feature-item h3{
+
+    color:#333;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================
+   詳細を見る
+========================= */
+
+.feature-item details{
+
+    margin:0;
+
+}
+
+
+.feature-item summary{
+
+    display:inline-block;
+
+    color:#28bdb0;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    list-style:none;
+
+    user-select:none;
+
+}
+
+
+.feature-item summary::-webkit-details-marker{
+
+    display:none;
+
+}
+
+
+.feature-item summary::after{
+
+    content:" ▼";
+
+    font-size:13px;
+
+}
+
+
+.feature-item details[open] summary::after{
+
+    content:" ▲";
+
+}
+
+
+/* =========================
+   機能説明本文
+========================= */
+
+.feature-description{
+
+    margin-top:15px;
+
+    padding:22px 25px;
+
+    background:#f3f3f3;
+
+    border-radius:8px;
+
+    color:#444;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+
+.feature-description p{
+
+    margin-bottom:18px;
+
+}
+
+
+.feature-description p:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+/* =========================
+   EMW関連
+========================= */
+
+.emw-feature{
+
+    margin-top:45px;
+
+}
+
+
+/* =========================
+   Q&A
+========================= */
+
+.qa-section{
+
+    max-width:1000px;
+
+    margin:70px auto 0;
+
+}
+
+
+.qa-item{
+
+    margin-bottom:55px;
+
+}
+
+
+.qa-item h3{
+
+    color:#333;
+
+    font-size:25px;
+
+    font-weight:bold;
+
+    line-height:1.5;
+
+    margin-bottom:20px;
+
+}
+
+
+.qa-answer{
+
+    background:#f1f1f1;
+
+    padding:25px 30px;
+
+    color:#444;
+
+    font-size:19px;
+
+    line-height:1.8;
+
+}
+
+
+/* =========================
+   本サイトへのレビューとの
+   余白
+========================= */
+
+.feature-section + .voice-section{
+
+    border-radius:0 0 18px 18px;
+
+}
+
+
+/* =========================
+   タブレット
+========================= */
+
+@media(max-width:1000px){
+
+    .feature-section{
+
+        padding:45px 30px 50px;
+
+    }
+
+}
+
+
+/* =========================
+   スマホ
+========================= */
+
+@media(max-width:650px){
+
+    .site-introduction{
+
+        font-size:13px;
+
+        line-height:1.7;
+
+    }
+
+
+    .section-title{
+
+        font-size:25px;
+
+        margin-bottom:35px;
+
+    }
+
+
+    .feature-section{
+
+        padding:40px 20px 45px;
+
+    }
+
+
+    .feature-item h3{
+
+        font-size:20px;
+
+    }
+
+
+    .feature-item summary{
+
+        font-size:15px;
+
+    }
+
+
+    .feature-description{
+
+        padding:18px;
+
+        font-size:16px;
+
+        line-height:1.8;
+
+    }
+
+
+    .qa-section{
+
+        margin-top:50px;
+
+    }
+
+
+    .qa-item h3{
+
+        font-size:20px;
+
+    }
+
+
+    .qa-answer{
+
+        padding:20px;
+
+        font-size:16px;
+
+    }
+
+}
