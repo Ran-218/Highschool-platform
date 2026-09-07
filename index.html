@@ -530,10 +530,15 @@
      Firebase
 ========================= -->
 
+<!-- =========================
+     Firebase
+========================= -->
+
 <script type="module">
 
-  // Firebase本体は js/firebase.js から読み込む
+  // Firebaseの接続情報
   import { db } from "./js/firebase.js";
+
 
   // Firestoreで使用する機能
   import {
@@ -559,24 +564,29 @@
     document.getElementById("viewButton");
 
 
-  // 現在の閲覧数を表示
+  // ------------------------------------------
+  // 閲覧数を読み込む
+  // ------------------------------------------
+
   async function loadViewCount() {
 
     try {
 
-      const snapshot =
-        await getDoc(viewRef);
+      const snapshot = await getDoc(viewRef);
 
       if (snapshot.exists()) {
 
-        const data =
-          snapshot.data();
+        const data = snapshot.data();
+
+        const views = Number(data.views || 0);
 
         viewCountElement.textContent =
-          Number(data.views || 0).toLocaleString();
+          views.toLocaleString();
 
       } else {
 
+        // Firebaseにまだhomeがない場合
+        // 0として表示
         viewCountElement.textContent = "0";
 
       }
@@ -588,97 +598,90 @@
         error
       );
 
+      // エラーでも画面が壊れないようにする
+      viewCountElement.textContent = "0";
+
     }
 
   }
 
 
-  // ==========================================
-  // 閲覧ボタン
-  // ==========================================
+  // ------------------------------------------
+  // PUSHボタン
+  // ------------------------------------------
 
-  viewButton.addEventListener("click", async () => {
+  viewButton.addEventListener(
+    "click",
+    async () => {
 
-    // 連打防止
-    if (viewButton.disabled) {
+      // 連打防止
+      if (viewButton.disabled) {
 
-      return;
-
-    }
-
-    viewButton.disabled = true;
-
-    try {
-
-      await runTransaction(
-        db,
-        async (transaction) => {
-
-          const snapshot =
-            await transaction.get(viewRef);
-
-          let currentViews = 0;
-
-          if (snapshot.exists()) {
-
-            currentViews =
-              Number(
-                snapshot.data().views || 0
-              );
-
-          }
-
-          transaction.set(
-            viewRef,
-            {
-              views: currentViews + 1
-            },
-            {
-              merge: true
-            }
-          );
-
-        }
-      );
-
-
-      // 表示を更新
-      const snapshot =
-        await getDoc(viewRef);
-
-      if (snapshot.exists()) {
-
-        const data =
-          snapshot.data();
-
-        viewCountElement.textContent =
-          Number(
-            data.views || 0
-          ).toLocaleString();
+        return;
 
       }
 
+      viewButton.disabled = true;
 
-      // 押したことが分かるようにする
-      viewButton.classList.add("pressed");
+      try {
 
-      viewButton.querySelector("span").textContent =
-        "THANK YOU!";
+        await runTransaction(
+          db,
+          async (transaction) => {
+
+            const snapshot =
+              await transaction.get(viewRef);
+
+            let currentViews = 0;
+
+            if (snapshot.exists()) {
+
+              currentViews =
+                Number(
+                  snapshot.data().views || 0
+                );
+
+            }
+
+            transaction.set(
+              viewRef,
+              {
+                views: currentViews + 1
+              },
+              {
+                merge: true
+              }
+            );
+
+          }
+        );
 
 
-    } catch (error) {
+        // 更新後の数字を表示
+        await loadViewCount();
 
-      console.error(
-        "閲覧数の更新に失敗しました:",
-        error
-      );
 
-      // エラーの場合はもう一度押せるようにする
-      viewButton.disabled = false;
+        // ボタン表示変更
+        viewButton.classList.add("pressed");
+
+        viewButton.querySelector("span").textContent =
+          "THANK YOU!";
+
+
+      } catch (error) {
+
+        console.error(
+          "閲覧数の更新に失敗しました:",
+          error
+        );
+
+        // エラーなら再び押せるようにする
+        viewButton.disabled = false;
+
+      }
 
     }
-
-  });
+  );
 
 
   // ==========================================
@@ -689,8 +692,10 @@
     document.getElementById("memberCount");
 
 
-  // Firebaseのmembersコレクションの
-  // ドキュメント数を取得
+  // ------------------------------------------
+  // メンバー数を読み込む
+  // ------------------------------------------
+
   async function loadMemberCount() {
 
     try {
@@ -703,12 +708,15 @@
       memberCountElement.textContent =
         snapshot.size.toLocaleString();
 
+
     } catch (error) {
 
       console.error(
         "メンバー数の取得に失敗しました:",
         error
       );
+
+      memberCountElement.textContent = "0";
 
     }
 
@@ -719,22 +727,31 @@
   // ③ メンバー登録
   // ==========================================
 
+  const memberForm =
+    document.getElementById("memberForm");
+
   const usernameInput =
     document.getElementById("usernameInput");
 
-  const registerButton =
-    document.getElementById("registerButton");
+
+  // ------------------------------------------
+  // フォーム送信
+  // ------------------------------------------
+
+  memberForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      // ページ再読み込みを防ぐ
+      event.preventDefault();
 
 
-  registerButton.addEventListener(
-    "click",
-    async () => {
-
+      // 入力されたユーザーネーム
       const username =
         usernameInput.value.trim();
 
 
-      // ユーザーネーム未入力
+      // 未入力の場合
       if (!username) {
 
         alert(
@@ -746,29 +763,53 @@
       }
 
 
-      // 送信中はボタンを無効化
-      registerButton.disabled = true;
+      // ボタンを取得
+      const submitButton =
+        memberForm.querySelector("button");
+
+
+      // 二重送信防止
+      submitButton.disabled = true;
+
+      submitButton.textContent =
+        "送信中...";
 
 
       try {
 
-        // membersコレクションに登録
+        // ======================================
+        // Firebaseへ保存
+        // ======================================
+
         await addDoc(
           collection(db, "members"),
           {
+
             username: username,
+
             createdAt: new Date()
+
           }
         );
 
 
+        // ======================================
         // 入力欄を空にする
+        // ======================================
+
         usernameInput.value = "";
 
 
-        // メンバー数を再取得
+        // ======================================
+        // メンバー数を更新
+        // ======================================
+
         await loadMemberCount();
 
+
+        // ======================================
+        // 登録完了表示
+        // ======================================
 
         alert(
           "メンバー登録が完了しました！"
@@ -783,14 +824,18 @@
         );
 
         alert(
-          "メンバー登録に失敗しました。もう一度お試しください。"
+          "メンバー登録に失敗しました。\n\n" +
+          "Firebaseへの保存に失敗しています。"
         );
 
 
       } finally {
 
-        // 送信ボタンを再び有効化
-        registerButton.disabled = false;
+        // ボタンを元に戻す
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+          "送信";
 
       }
 
@@ -799,7 +844,7 @@
 
 
   // ==========================================
-  // 初期読み込み
+  // ④ ページを開いたとき
   // ==========================================
 
   loadViewCount();
