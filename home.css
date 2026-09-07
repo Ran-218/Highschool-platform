@@ -377,10 +377,19 @@ font-size:20px;
 
     align-items:center;
 
-    gap:20px;
+    gap:60px;
 
 }
 
+.count-group{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
 
 .view-count-label{
 
@@ -393,7 +402,6 @@ font-size:20px;
     white-space:nowrap;
 
 }
-
 
 .view-count{
 
