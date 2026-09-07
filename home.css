@@ -985,3 +985,182 @@ font-size:20px;
     }
 
 }
+/* =========================
+   メンバー登録
+========================= */
+
+.member-register{
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:20px;
+
+    padding:15px 30px;
+
+    border-left:2px solid transparent;
+    border-right:2px solid transparent;
+
+}
+
+
+.member-register-text{
+
+    font-size:16px;
+
+    color:#333;
+
+    font-weight:500;
+
+    white-space:nowrap;
+
+}
+
+
+.member-form{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.member-form input{
+
+    width:260px;
+
+    padding:10px 14px;
+
+    border:2px solid #cccccc;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    font-family:"Yu Gothic","Meiryo",sans-serif;
+
+    outline:none;
+
+}
+
+
+.member-form input:focus{
+
+    border-color:#40E0D0;
+
+}
+
+
+.member-form button{
+
+    padding:10px 22px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#40E0D0;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    font-family:"Yu Gothic","Meiryo",sans-serif;
+
+}
+
+
+.member-form button:hover{
+
+    background:#20b2aa;
+
+}
+
+
+/* 登録済み */
+
+.member-register.registered{
+
+    justify-content:center;
+
+}
+
+
+.member-registered-message{
+
+    font-size:16px;
+
+    color:#20b2aa;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================
+   メンバー登録 スマホ
+========================= */
+
+@media(max-width:650px){
+
+    .member-register{
+
+        flex-direction:column;
+
+        gap:10px;
+
+        padding:15px 20px;
+
+    }
+
+
+    .member-register-text{
+
+        font-size:14px;
+
+        white-space:normal;
+
+        text-align:center;
+
+    }
+
+
+    .member-form{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+
+    .member-form input{
+
+        width:70%;
+
+        font-size:14px;
+
+    }
+
+
+    .member-form button{
+
+        padding:10px 16px;
+
+        font-size:14px;
+
+    }
+
+}
