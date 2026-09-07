@@ -526,41 +526,28 @@
      Firebase
 ========================= -->
 
+<!-- =========================
+     Firebase
+========================= -->
+
 <script type="module">
 
-  import {
-    initializeApp
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  // Firebase本体は js/firebase.js から読み込む
+  import { db } from "./js/firebase.js";
 
+  // Firestoreで使用する機能
   import {
-    getFirestore,
     doc,
     getDoc,
-    runTransaction
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    runTransaction,
+    collection,
+    addDoc,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
   // ==========================================
-  // ここに現在使用しているFirebase設定を入れる
-  // ==========================================
-
-  const firebaseConfig = {
-  apiKey: "AIzaSyBkz_v4PKn7dr_Kggfy9W_4b6ClUVzFaOE",
-  authDomain: "highschoolplatform-5958f.firebaseapp.com",
-  projectId: "highschoolplatform-5958f",
-  storageBucket: "highschoolplatform-5958f.firebasestorage.app",
-  messagingSenderId: "218288282991",
-  appId: "1:218288282991:web:72ceaffbcec3ffd65c1c9a"
-};
-
-
-  const app = initializeApp(firebaseConfig);
-
-  const db = getFirestore(app);
-
-
-  // ==========================================
-  // 閲覧数
+  // ① 閲覧数
   // ==========================================
 
   const viewRef = doc(db, "siteStats", "home");
@@ -577,11 +564,13 @@
 
     try {
 
-      const snapshot = await getDoc(viewRef);
+      const snapshot =
+        await getDoc(viewRef);
 
       if (snapshot.exists()) {
 
-        const data = snapshot.data();
+        const data =
+          snapshot.data();
 
         viewCountElement.textContent =
           Number(data.views || 0).toLocaleString();
@@ -594,50 +583,63 @@
 
     } catch (error) {
 
-      console.error("閲覧数の取得に失敗しました:", error);
+      console.error(
+        "閲覧数の取得に失敗しました:",
+        error
+      );
 
     }
 
   }
 
 
+  // ==========================================
   // 閲覧ボタン
+  // ==========================================
+
   viewButton.addEventListener("click", async () => {
 
     // 連打防止
     if (viewButton.disabled) {
+
       return;
+
     }
 
     viewButton.disabled = true;
 
     try {
 
-      await runTransaction(db, async (transaction) => {
+      await runTransaction(
+        db,
+        async (transaction) => {
 
-        const snapshot =
-          await transaction.get(viewRef);
+          const snapshot =
+            await transaction.get(viewRef);
 
-        let currentViews = 0;
+          let currentViews = 0;
 
-        if (snapshot.exists()) {
+          if (snapshot.exists()) {
 
-          currentViews =
-            Number(snapshot.data().views || 0);
+            currentViews =
+              Number(
+                snapshot.data().views || 0
+              );
+
+          }
+
+          transaction.set(
+            viewRef,
+            {
+              views: currentViews + 1
+            },
+            {
+              merge: true
+            }
+          );
 
         }
-
-        transaction.set(
-          viewRef,
-          {
-            views: currentViews + 1
-          },
-          {
-            merge: true
-          }
-        );
-
-      });
+      );
 
 
       // 表示を更新
@@ -646,10 +648,13 @@
 
       if (snapshot.exists()) {
 
-        const data = snapshot.data();
+        const data =
+          snapshot.data();
 
         viewCountElement.textContent =
-          Number(data.views || 0).toLocaleString();
+          Number(
+            data.views || 0
+          ).toLocaleString();
 
       }
 
@@ -663,7 +668,10 @@
 
     } catch (error) {
 
-      console.error("閲覧数の更新に失敗しました:", error);
+      console.error(
+        "閲覧数の更新に失敗しました:",
+        error
+      );
 
       // エラーの場合はもう一度押せるようにする
       viewButton.disabled = false;
@@ -673,7 +681,131 @@
   });
 
 
+  // ==========================================
+  // ② メンバー数
+  // ==========================================
+
+  const memberCountElement =
+    document.getElementById("memberCount");
+
+
+  // Firebaseのmembersコレクションの
+  // ドキュメント数を取得
+  async function loadMemberCount() {
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(db, "members")
+        );
+
+      memberCountElement.textContent =
+        snapshot.size.toLocaleString();
+
+    } catch (error) {
+
+      console.error(
+        "メンバー数の取得に失敗しました:",
+        error
+      );
+
+    }
+
+  }
+
+
+  // ==========================================
+  // ③ メンバー登録
+  // ==========================================
+
+  const usernameInput =
+    document.getElementById("usernameInput");
+
+  const registerButton =
+    document.getElementById("registerButton");
+
+
+  registerButton.addEventListener(
+    "click",
+    async () => {
+
+      const username =
+        usernameInput.value.trim();
+
+
+      // ユーザーネーム未入力
+      if (!username) {
+
+        alert(
+          "ユーザーネームを入力してください。"
+        );
+
+        return;
+
+      }
+
+
+      // 送信中はボタンを無効化
+      registerButton.disabled = true;
+
+
+      try {
+
+        // membersコレクションに登録
+        await addDoc(
+          collection(db, "members"),
+          {
+            username: username,
+            createdAt: new Date()
+          }
+        );
+
+
+        // 入力欄を空にする
+        usernameInput.value = "";
+
+
+        // メンバー数を再取得
+        await loadMemberCount();
+
+
+        alert(
+          "メンバー登録が完了しました！"
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "メンバー登録に失敗しました:",
+          error
+        );
+
+        alert(
+          "メンバー登録に失敗しました。もう一度お試しください。"
+        );
+
+
+      } finally {
+
+        // 送信ボタンを再び有効化
+        registerButton.disabled = false;
+
+      }
+
+    }
+  );
+
+
+  // ==========================================
+  // 初期読み込み
+  // ==========================================
+
   loadViewCount();
+
+  loadMemberCount();
+
 
 </script>
 
