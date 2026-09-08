@@ -1164,3 +1164,27 @@ font-size:20px;
     }
 
 }
+
+/* =========================
+   フッター
+========================= */
+
+.site-footer{
+
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    background:#eef8f8;
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+}
