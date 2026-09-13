@@ -165,13 +165,10 @@
 
   </div>
 </section>
-<script>
 
+<script>
 function vote(button, item, choice) {
 
-  /*
-   * 同じ投票を連打できないようにする
-   */
   const card = button.closest(".emw-vote-card");
 
   if (card.dataset.voted === "true") {
@@ -180,19 +177,11 @@ function vote(button, item, choice) {
 
   card.dataset.voted = "true";
 
-
-  /*
-   * 選択したボタンを少し強調
-   */
   button.classList.add("selected");
 
-
-  /*
-   * キャラクターを作成
-   */
   const character = document.createElement("img");
 
-  character.src = "images/emw-character.png";
+  character.src = "../images/emw-character.png";
   character.alt = "EMWキャラクター";
 
   character.classList.add(
@@ -200,25 +189,13 @@ function vote(button, item, choice) {
     "character-jump"
   );
 
-
-  /*
-   * ボタンの中にキャラクターを配置
-   */
   button.style.position = "relative";
   button.appendChild(character);
 
-
-  /*
-   * 0.9秒後にキャラクターを削除
-   */
   setTimeout(() => {
     character.remove();
   }, 900);
 
-
-  /*
-   * 投票後、ボタンを少し無効化
-   */
   const buttons = card.querySelectorAll(".vote-buttons button");
 
   buttons.forEach(btn => {
@@ -226,13 +203,9 @@ function vote(button, item, choice) {
     btn.style.cursor = "default";
   });
 
-
-  /*
-   * ここでFirebaseへの投票保存処理を追加可能
-   */
   console.log("投票:", item, choice);
 }
-
 </script>
+
 </body>
 </html>
