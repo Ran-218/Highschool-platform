@@ -531,3 +531,167 @@
     top: -58px;
   }
 }
+/* ==================================================
+   現在のEMW
+================================================== */
+
+.emw-now-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+
+  color: #333;
+  box-sizing: border-box;
+}
+
+.emw-now-page * {
+  box-sizing: border-box;
+}
+
+
+/* --------------------
+   タイトル
+-------------------- */
+
+.emw-now-intro {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.emw-now-intro h1 {
+  font-size: 32px;
+  margin: 0;
+  color: #333;
+}
+
+
+/* --------------------
+   現在のEMW画像
+-------------------- */
+
+.emw-now-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  margin: 0 auto 40px;
+
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.emw-now-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* --------------------
+   内容
+-------------------- */
+
+.emw-now-content {
+  width: 100%;
+}
+
+
+/* --------------------
+   エシカル度
+-------------------- */
+
+.emw-now-list {
+  margin: 0 0 40px;
+  padding-left: 1.5em;
+
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+
+/* ● エシカル度 */
+.emw-now-list .emw-now-main {
+  list-style-type: disc;
+
+  margin-bottom: 18px;
+}
+
+
+/* ○ 3項目 */
+.emw-now-list li:not(.emw-now-main) {
+  list-style-type: circle;
+}
+
+
+/* --------------------
+   解説
+-------------------- */
+
+.emw-now-explanation {
+  margin-top: 10px;
+}
+
+.emw-now-explanation h2 {
+  font-size: 24px;
+
+  margin: 0 0 10px;
+
+  color: #3f7f39;
+}
+
+.emw-now-explanation p {
+  margin: 0;
+
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+
+/* ==================================================
+   スマホ
+================================================== */
+
+@media (max-width: 600px) {
+
+  .emw-now-page {
+    padding: 25px 15px 60px;
+  }
+
+
+  .emw-now-intro {
+    margin-bottom: 20px;
+  }
+
+  .emw-now-intro h1 {
+    font-size: 26px;
+  }
+
+
+  .emw-now-image {
+    margin-bottom: 30px;
+    border-radius: 10px;
+  }
+
+
+  .emw-now-list {
+    font-size: 15px;
+    line-height: 1.9;
+
+    padding-left: 1.4em;
+
+    margin-bottom: 30px;
+  }
+
+
+  .emw-now-explanation h2 {
+    font-size: 21px;
+  }
+
+  .emw-now-explanation p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+}
