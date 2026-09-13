@@ -247,21 +247,25 @@
 -------------------- */
 
 .vote-character {
+
   position: absolute;
 
-  width: 80px;
-  height: 80px;
+  width: 320px;
+
+  height: 320px;
 
   object-fit: contain;
 
   left: 50%;
-  top: -80px;
+
+  top: -320px;
 
   transform: translateX(-50%);
 
   pointer-events: none;
 
   z-index: 10;
+
 }
 
 
