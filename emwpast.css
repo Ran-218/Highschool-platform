@@ -42,8 +42,15 @@ body {
 .emw-past-page h1 {
   margin: 0 0 15px;
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
+
+  font-family:
+    "Hiragino Mincho ProN",
+    "Yu Mincho",
+    "YuMincho",
+    "Noto Serif JP",
+    serif;
 }
 
 
