@@ -1,0 +1,241 @@
+/* =========================
+   歴代EMW
+   ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    "YuGothic",
+    "Meiryo",
+    sans-serif;
+
+  background-color: #ffffff;
+  color: #333333;
+}
+
+
+/* =========================
+   ページ全体
+   ========================= */
+
+.emw-past-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 30px 80px;
+}
+
+
+/* =========================
+   ページタイトル
+   ========================= */
+
+.emw-past-page h1 {
+  margin: 0 0 15px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+
+/* =========================
+   説明文
+   ========================= */
+
+.intro {
+  margin: 0 0 40px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+
+/* =========================
+   歴代EMW 各回
+   ========================= */
+
+.emw-history {
+  margin-bottom: 45px;
+  padding-bottom: 35px;
+
+  border-bottom: 1px solid #dddddd;
+}
+
+
+/* 第n回 ○月〜○月 */
+
+.emw-history h2 {
+  margin: 0 0 20px;
+
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   エシカル度
+   ========================= */
+
+.ethical-level {
+  margin: 0 0 20px;
+
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+
+/* 「エシカル度：」だけ色付き */
+
+.ethical-level strong {
+  color: #00a6a6;
+  font-weight: 700;
+}
+
+
+/* =========================
+   解説
+   ========================= */
+
+.explanation {
+  margin-bottom: 20px;
+}
+
+
+/* 「解説：」 */
+
+.explanation-title {
+  display: inline;
+  margin: 0;
+
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.explanation-title strong {
+  color: #00a6a6;
+  font-weight: 700;
+}
+
+
+/* =========================
+   詳細を表示
+   ========================= */
+
+.explanation details {
+  display: inline;
+}
+
+
+/* クリックする部分 */
+
+.explanation summary {
+  display: inline-block;
+
+  margin-left: 4px;
+
+  cursor: pointer;
+
+  font-size: 1rem;
+  line-height: 1.7;
+
+  color: #555555;
+
+  list-style: none;
+}
+
+
+/* デフォルトの三角マークを消す */
+
+.explanation summary::-webkit-details-marker {
+  display: none;
+}
+
+
+/* 「詳細を表示」の前に＋ */
+
+.explanation summary::before {
+  content: "＋ ";
+}
+
+
+/* 開いたときは− */
+
+.explanation details[open] summary::before {
+  content: "− ";
+}
+
+
+/* 解説本文 */
+
+.explanation-text {
+  margin: 12px 0 0;
+
+  padding: 15px 18px;
+
+  background-color: #f5fbfb;
+
+  border-left: 4px solid #00a6a6;
+
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+
+/* =========================
+   3つのエシカル指標
+   ========================= */
+
+.ethical-points {
+  margin: 0;
+  padding-left: 1.5em;
+
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.ethical-points li {
+  padding-left: 3px;
+}
+
+
+/* =========================
+   スマートフォン
+   ========================= */
+
+@media screen and (max-width: 600px) {
+
+  .emw-past-page {
+    padding: 30px 20px 60px;
+  }
+
+  .emw-past-page h1 {
+    font-size: 1.9rem;
+  }
+
+  .intro {
+    margin-bottom: 30px;
+  }
+
+  .emw-history h2 {
+    font-size: 1.25rem;
+  }
+
+  .ethical-level,
+  .explanation-title {
+    font-size: 1rem;
+  }
+
+  .ethical-points {
+    font-size: 0.95rem;
+  }
+
+}
