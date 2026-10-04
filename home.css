@@ -1188,3 +1188,22 @@ font-size:20px;
     line-height:1.6;
 
 }
+/* =========================
+お知らせカード（紫色）
+========================= */
+
+.info-card {
+border-color: #f6f0ff;
+}
+
+.info-card h2 {
+color: #8e63c7;
+}
+
+.info-card .btn {
+background: #9b72d0;
+}
+
+.info-card .btn:hover {
+background: #7b4eb5;
+}
