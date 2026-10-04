@@ -338,30 +338,44 @@
   </div>
 </section>
 
-<script>
-function vote(button, item, choice) {
 
+<script>
+/* 商品説明の開閉 */
+function toggleProductInfo(button) {
+  const product = button.closest(".product");
+  const info = product.querySelector(".product-info");
+
+  if (!info) return;
+
+  const isOpen = info.classList.toggle("open");
+
+  button.textContent = isOpen
+    ? "説明を閉じる"
+    : "商品説明";
+
+  button.setAttribute("aria-expanded", String(isOpen));
+}
+
+/* 投票 */
+function vote(button, item, choice) {
   const card = button.closest(".emw-vote-card");
 
-  if (card.dataset.voted === "true") {
+  if (!card || card.dataset.voted === "true") {
     return;
   }
 
   card.dataset.voted = "true";
-
   button.classList.add("selected");
 
   const character = document.createElement("img");
 
   character.src = "../images/emw-character-jumping.png";
   character.alt = "EMWキャラクター";
-
   character.classList.add(
     "vote-character",
     "character-jump"
   );
 
-  button.style.position = "relative";
   button.appendChild(character);
 
   setTimeout(() => {
