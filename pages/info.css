@@ -1,0 +1,204 @@
+
+/* =========================
+   全体
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #eef8f8;
+    padding: 40px 20px;
+    color: #333;
+}
+
+/* =========================
+   コンテナ
+========================= */
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* =========================
+   タイトル
+========================= */
+
+.title-box {
+    background: linear-gradient(90deg, #40E0D0, #66E8DB);
+    color: white;
+    padding: 35px 30px;
+    border-radius: 18px 18px 0 0;
+}
+
+.title-box h1 {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.title-box p {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* =========================
+   お知らせ一覧
+========================= */
+
+.info-section {
+    background: white;
+    padding: 40px 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   月ごとのお知らせ
+========================= */
+
+.info-item {
+    max-width: 900px;
+    margin: 0 auto 55px;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 月の小見出し */
+
+.info-item h2 {
+    font-size: 28px;
+    color: #20b2aa;
+    padding: 0 0 12px 15px;
+    margin-bottom: 25px;
+    border-left: 6px solid #40E0D0;
+    border-bottom: 2px solid #d9f3f0;
+}
+
+/* =========================
+   お知らせ画像
+========================= */
+
+.info-image {
+    width: 100%;
+    text-align: center;
+}
+
+.info-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+}
+
+/* =========================
+   ホームに戻るボタン
+========================= */
+
+.back-area {
+    background: white;
+    padding: 10px 20px 45px;
+    text-align: center;
+    border-radius: 0 0 18px 18px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 14px 35px;
+    background: #40E0D0;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    background: #20b2aa;
+}
+
+/* =========================
+   フッター
+========================= */
+
+.site-footer {
+    padding: 25px 20px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================
+   タブレット
+========================= */
+
+@media (max-width: 800px) {
+    body {
+        padding: 25px 15px;
+    }
+
+    .title-box {
+        padding: 30px 25px;
+    }
+
+    .title-box h1 {
+        font-size: 30px;
+    }
+
+    .info-section {
+        padding: 35px 25px;
+    }
+}
+
+/* =========================
+   スマートフォン
+========================= */
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    .title-box {
+        padding: 25px 20px;
+    }
+
+    .title-box h1 {
+        font-size: 25px;
+    }
+
+    .title-box p {
+        font-size: 14px;
+    }
+
+    .info-section {
+        padding: 30px 18px;
+    }
+
+    .info-item {
+        margin-bottom: 40px;
+    }
+
+    .info-item h2 {
+        font-size: 23px;
+        margin-bottom: 18px;
+    }
+
+    .back-area {
+        padding-bottom: 35px;
+    }
+
+    .back-button {
+        font-size: 16px;
+    }
+}
