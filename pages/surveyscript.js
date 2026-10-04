@@ -195,7 +195,40 @@ window.submitAnswer = async function(answer) {
 
 };
 
+// ============================
+// 回答理由の送信
+// ============================
+window.submitReason = async function() {
+  if (!todayQuestionId) {
+    alert("質問がまだありません。");
+    return;
+  }
 
+  const reason = document.getElementById("reason").value.trim();
+
+  if (!reason) {
+    alert("回答理由を入力してください。");
+    return;
+  }
+
+  try {
+    await addDoc(
+      collection(surveyDB, "answers"),
+      {
+        questionId: todayQuestionId,
+        reason: reason,
+        createdAt: serverTimestamp()
+      }
+    );
+
+    alert("回答理由を送信しました。");
+    document.getElementById("reason").value = "";
+
+  } catch (error) {
+    console.error(error);
+    alert("回答理由の送信に失敗しました。");
+  }
+};
 
 // ============================
 // 質問投稿
