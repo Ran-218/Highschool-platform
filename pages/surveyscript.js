@@ -145,59 +145,55 @@ function selectTodayQuestion(questions) {
 
 
 
-// ============================
-// 回答送信
-// ============================
 
+ // ============================
+ // 回答送信（回答理由も保存）
+ // ============================
 
-window.submitAnswer = async function(answer){
+window.submitAnswer = async function(answer) {
 
+  // 今月の質問がない場合
+  if (!todayQuestionId) {
+    alert("質問がまだありません。");
+    return;
+  }
 
-  try{
+  // 入力された回答理由を取得
+  const reason =
+    document.getElementById("reason").value.trim();
 
+  try {
 
     await addDoc(
-
-      collection(surveyDB,"answers"),
-
+      collection(surveyDB, "answers"),
       {
+        questionId: todayQuestionId,
 
-        questionId:
-          todayQuestionId,
+        answer: answer,
 
-        answer:
-          answer,
+        reason: reason,
 
-        createdAt:
-          serverTimestamp()
-
+        createdAt: serverTimestamp()
       }
-
     );
-
-
 
     alert("回答しました");
 
+    // 理由の入力欄を空にする
+    document.getElementById("reason").value = "";
 
-
+    // 回答数・グラフを更新
     loadData();
 
-
-
-  }catch(error){
-
+  } catch(error) {
 
     console.error(error);
 
     alert("回答失敗");
 
-
   }
 
-
 };
-
 
 
 
