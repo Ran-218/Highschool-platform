@@ -118,57 +118,30 @@ async function loadData(){
 // ============================
 
 
-function selectTodayQuestion(questions){
 
-
-  if(questions.length===0){
-
-
+function selectTodayQuestion(questions) {
+  if (questions.length === 0) {
     document.getElementById("question").innerText =
       "質問がありません";
-
-
+    todayQuestionId = "";
     return;
-
-
   }
 
+  // 今月の質問を選ぶ基準
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
 
+  // 月ごとに同じ質問を表示する
+  const hash = year * 12 + month;
+  const index = hash % questions.length;
 
-  const today =
-    new Date().toISOString().slice(0,10);
-
-
-
-  let hash = 0;
-
-
-
-  for(let i=0;i<today.length;i++){
-
-
-    hash += today.charCodeAt(i);
-
-
-  }
-
-
-
-  const index =
-    hash % questions.length;
-
-
-
-  todayQuestionId =
-    questions[index].id;
-
-
+  todayQuestionId = questions[index].id;
 
   document.getElementById("question").innerText =
     questions[index].text;
-
-
 }
+
 
 
 
