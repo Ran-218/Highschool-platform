@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>高校生 世論調査</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,6 +13,19 @@
 
 <h1>今月の質問</h1>
 <p id="question">読み込み中...</p>
+
+<!-- 回答理由 -->
+<label for="reason">回答した理由（任意）</label>
+<br>
+<textarea
+  id="reason"
+  placeholder="理由を自由に記入してください..."
+  rows="4"
+  maxlength="500"
+  style="width:100%; max-width:500px; margin:10px 0;"
+></textarea>
+
+<br>
 
 <button onclick="submitAnswer('はい')">はい</button>
 <button onclick="submitAnswer('いいえ')">いいえ</button>
